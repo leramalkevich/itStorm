@@ -1,0 +1,42 @@
+@import "variables";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.container {
+  max-width: $container-width;
+  margin: 0 auto;
+}
+
+.button {
+  border-radius: 5px;
+  cursor: pointer;
+  box-sizing: border-box;
+  background-color: $light-blue-main;
+  color: #ffffff;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  border: 0;
+  text-align: center;
+  font-size: 16px;
+  padding: 15px;
+}
+
+.input {
+  box-sizing: border-box;
+  padding: 17px 20px;
+  border: 2px solid $light-blue-main;
+  border-radius: 3px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  &::placeholder {
+    color: #A8ABA7;
+  }
+  color: $light-blue-main;
+}

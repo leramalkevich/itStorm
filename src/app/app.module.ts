@@ -14,7 +14,7 @@ import { MainComponent } from './feature/main/main.component';
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
-    MainComponent
+    MainComponent,
   ],
   imports: [
     BrowserModule,

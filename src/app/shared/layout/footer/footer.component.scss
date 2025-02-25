@@ -1,0 +1,98 @@
+@import "../../../../assets/styles/variables";
+
+.footer {
+  padding-top: 40px;
+  padding-bottom: 54px;
+  background: #B9D5FD;
+
+  .container {
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 40px;
+
+      .footer-content {
+        margin-left: 40px;
+
+        .footer-menu {
+          ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+
+            li {
+              list-style: none;
+              margin-right: 20px;
+
+              a {
+                color: $dark-blue-main;
+                text-decoration: none;
+                &:hover {
+                  color: $light-blue-main;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .footer-additional-info {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: baseline;
+      .footer-additional-info-item {
+        margin-right: 60px;
+        &:last-child {
+          margin-right: 0;
+        }
+        .footer-additional-info-title {
+          font-family: Montserrat,sans-serif;
+          font-weight: 500;
+          font-size: 16px;
+          color:$light-blue-main;
+          margin-bottom: 10px;
+        }
+        .footer-additional-info-text {
+          line-height: 20.8px;
+          color:$dark-blue-main;
+          margin-bottom: 10px;
+        }
+        &.address {
+          max-width: 253px;
+        }
+        &.phone {
+          max-width: 153px;
+          .button {
+            font-size: 12px;
+            padding: 10px 20px;
+            width: 153px;
+          }
+        }
+        &.email {
+          max-width: 127px;
+        }
+        &.social-medias {
+          max-width: 203px;
+          .footer-additional-info-links {
+            margin-top: 5px;
+            display: flex;
+            a {
+              text-decoration: none;
+              cursor: pointer;
+              margin-right: 12px;
+              width: 24px;
+              height: 24px;
+              &:last-child {
+                margin-right: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+    .rights {
+      color: $light-blue-main;
+    }
+  }
+}
