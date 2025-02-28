@@ -8,7 +8,8 @@ const routes: Routes = [{
   component:LayoutComponent,
   children:[
     {path:'', component:MainComponent},
-    {path:'', loadChildren:()=>import('./feature/user/user.module').then(m=>m.UserModule)}
+    {path:'', loadChildren:()=>import('./feature/user/user.module').then(m=>m.UserModule)},
+    {path:'', loadChildren:()=>import('./feature/blog/blog.module').then(m=>m.BlogModule)}
   ]
 }];
 
