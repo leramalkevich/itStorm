@@ -1,1 +1,96 @@
-<p>catalogue works!</p>
+<section class="blog-page">
+    <div class="container">
+        <div class="blog-page-title">Блог</div>
+        <div class="blog-page-head">
+            <div class="blog-applied-filters">
+                <div class="blog-applied-filter">
+                    <span>Дизайн</span>
+                    <a href="#">
+                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_16193_586)">
+                                <line x1="1.93553" y1="3.15002" x2="13.9563" y2="15.1708" stroke="#709FDC" stroke-linecap="round"/>
+                                <line x1="13.9236" y1="3.12984" x2="1.90278" y2="15.1507" stroke="#709FDC" stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="blog-soring-block" [class.open]="sortingBlockOpen" (click)="toggleSortingBlock()">
+                <div class="blog-sorting-head">
+                    <span>Фильтр</span>
+                    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 14.5C9.41668 14.5 8.83335 14.275 8.39168 13.8334L2.95835 8.40003C2.71668 8.15837 2.71668 7.75837 2.95835 7.5167C3.20002 7.27503 3.60002 7.27503 3.84168 7.5167L9.27502 12.95C9.67502 13.35 10.325 13.35 10.725 12.95L16.1583 7.5167C16.4 7.27503 16.8 7.27503 17.0417 7.5167C17.2833 7.75837 17.2833 8.15837 17.0417 8.40003L11.6083 13.8334C11.1667 14.275 10.5833 14.5 10 14.5Z" fill="#071739"/>
+                    </svg>
+                </div>
+                <div class="blog-sorting-body">
+                    <div class="blog-sorting-item">
+                        <span>Фриланс</span>
+                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
+                        </svg>
+
+                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
+                        </svg>
+                    </div>
+                    <div class="blog-sorting-item">
+                        <span>Дизайн</span>
+                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
+                        </svg>
+
+                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
+                        </svg>
+                    </div>
+                    <div class="blog-sorting-item">
+                        <span>SMM</span>
+                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
+                        </svg>
+
+                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
+                        </svg>
+                    </div>
+                    <div class="blog-sorting-item active">
+                        <span>Таргет</span>
+                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
+                        </svg>
+
+                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
+                        </svg>
+                    </div>
+                    <div class="blog-sorting-item">
+                        <span>Копирайтинг</span>
+                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
+                        </svg>
+
+                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="blog-articles">
+            <article-card></article-card>
+        </div>
+        <div class="blog-page-pagination">
+            <div class="pagination-arrow">
+                <img src="/assets/images/page/catalogue/previous-pagination-active.png" alt="Active backward arrow">
+<!--                <img src="/assets/images/page/catalogue/previous-pagination-disabled.png" alt="Disabled backward arrow">-->
+            </div>
+            <div class="pagination-pages">
+                <a href="#" class="pagination-page">1</a>
+            </div>
+            <div class="pagination-arrow">
+                <img src="/assets/images/page/catalogue/next-pagination-active.png" alt="Active forward arrow">
+<!--                <img src="/assets/images/page/catalogue/next-pagination-disabled.png" alt="Disabled forward arrow">-->
+            </div>
+        </div>
+    </div>
+</section>
