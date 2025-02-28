@@ -1,0 +1,34 @@
+<div class="popup" *ngIf="isShown">
+    <div class="container">
+        <div class="popup-close" (click)="popupService.hide()">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#BEBEBE" stroke-linecap="round"/>
+                <line x1="13.9236" y1="2.62971" x2="1.90277" y2="14.6505" stroke="#BEBEBE" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <div class="popup-inner-text order-a-call">
+            <div class="popup-title">
+                Закажите бесплатную консультацию!
+            </div>
+            <div class="popup-inputs">
+                <div class="popup-input">
+                    <input type="text" class="input" placeholder="Ваше имя">
+                </div>
+                <div class="popup-input">
+                    <input type="text" class="input" placeholder="Ваш номер телефона">
+                </div>
+            </div>
+            <div class="popup-actions">
+                <button class="button">Заказать консультацию</button>
+            </div>
+        </div>
+        <!--        <div class="popup-inner-text ordered-a-call">-->
+        <!--            <div class="popup-title">Спасибо за вашу заявку!</div>-->
+        <!--            <div class="popup-text">Мы свяжемся с вами при первой же возможности.</div>-->
+        <!--            <div class="popup-actions">-->
+        <!--                <button class="button ok-button" (click)="popupService.hide()">Окей</button>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+    </div>
+</div>

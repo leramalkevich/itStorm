@@ -1,0 +1,82 @@
+@import "../../../../assets/styles/variables";
+@import "../../../../assets/styles/mixins";
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(74, 74, 74, .8);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .container {
+    border: 2px solid $light-blue-main;
+    border-radius: 10px;
+    box-sizing: border-box;
+    height: 489px;
+    padding: 30px;
+    background-color: #FFFFFF;
+    text-align: center;
+    position: relative;
+
+    .popup-close {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      right: 30px;
+    }
+
+    .popup-inner-text {
+      &.order-a-call {
+        padding: 64px 130px;
+      }
+
+      &.ordered-a-call {
+        padding: 133px 112px;
+        .popup-title {
+          max-width: 443px;
+        }
+      }
+
+      .popup-title {
+        @include head-lora-38;
+        margin-bottom: 20px;
+        max-width: 406px;
+      }
+      .popup-text {
+        font-family: Montserrat, sans-serif;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18.2px;
+        margin-bottom: 40px;
+      }
+      .popup-inputs {
+        margin-bottom: 20px;
+        .popup-input {
+          width: 422px;
+          margin-bottom: 5px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          .input {
+            width: 422px;
+          }
+        }
+      }
+      .popup-actions {
+        .button {
+          width: 422px;
+          &.ok-button {
+            width: 73px;
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
+}

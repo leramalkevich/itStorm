@@ -40,3 +40,27 @@ html, body {
   }
   color: $light-blue-main;
 }
+
+.owl-carousel {
+  position: relative !important;
+}
+.owl-dots.ng-star-inserted {
+  position: absolute !important;
+  left: 50%;
+  bottom: calc(10% - 40px);
+}
+
+.owl-theme .owl-dots .owl-dot span {
+  border: 1px solid #FFFFFF!important;
+  background: transparent;
+  box-sizing: border-box;
+  margin: 5px 10px;
+}
+
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+  background-color: #FFFFFF;
+}
+
+.owl-nav.ng-star-inserted {
+  display: none!important;
+}

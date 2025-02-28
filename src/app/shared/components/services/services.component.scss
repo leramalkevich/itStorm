@@ -1,0 +1,54 @@
+@import "../../../../assets/styles/variables";
+
+.our-services-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .our-services-item {
+    width: 290px;
+    height: 498px;
+    box-sizing: border-box;
+
+    .our-services-item-image {
+      width: 290px;
+      height: 291px;
+      border-radius: 5px;
+    }
+
+    .our-services-item-info {
+      padding-top: 15px;
+      height: 156px;
+
+      .our-services-item-info-name {
+        font-family: Montserrat, sans-serif;
+        font-weight: 500;
+        font-size: 20px;
+        color: $light-blue-main;
+        margin-bottom: 10px;
+      }
+
+      .our-services-item-info-text {
+        font-size: 14px;
+        line-height: 18.2px;
+        color: $dark-blue-main;
+      }
+    }
+    .our-services-item-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .price {
+        font-family: Montserrat, sans-serif;
+        font-weight: 600;
+        font-size: 20px;
+        color: $light-blue-main;
+      }
+
+      .button {
+        width: 163px;
+      }
+    }
+  }
+}
