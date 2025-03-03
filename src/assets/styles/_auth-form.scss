@@ -19,6 +19,21 @@
       .input {
         width: 422px;
       }
+      &.password {
+          position: relative;
+        .password-control {
+          cursor: pointer;
+          position: absolute;
+          top: 19px;
+          right: 20px;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          svg path {
+            fill: $light-blue-main;
+          }
+        }
+      }
     }
 
     .authorization-checkbox {

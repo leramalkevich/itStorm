@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="blog-articles">
-            <article-card></article-card>
+            <article-card *ngFor="let article of articles?.items" [article]="article"></article-card>
         </div>
         <div class="blog-page-pagination">
             <div class="pagination-arrow">

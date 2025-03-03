@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {PopularArticlesResponseType} from "../../../../types/popular-articles-response.type";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'article-card',
@@ -7,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './article-card.component.scss'
 })
 export class ArticleCardComponent {
-
+  @Input()article!:PopularArticlesResponseType;
+  serverStaticPath = environment.serverStaticPath;
 }

@@ -1,5 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {OwlOptions} from "ngx-owl-carousel-o";
+import {ArticleService} from "../../services/article.service";
+import {DefaultResponseType} from "../../../types/default-response.type";
+import {PopularArticlesResponseType} from "../../../types/popular-articles-response.type";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {throwError} from "rxjs";
 
 @Component({
     selector: 'app-main',
@@ -7,7 +13,11 @@ import {OwlOptions} from "ngx-owl-carousel-o";
     templateUrl: './main.component.html',
     styleUrl: './main.component.scss'
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
+    private _snackBar = inject(MatSnackBar);
+    public popularArticles:PopularArticlesResponseType[]=[];
+    constructor(private articleService:ArticleService) {
+    }
     customOptions: OwlOptions = {
         loop: true,
         mouseDrag: false,
@@ -73,4 +83,28 @@ export class MainComponent {
             text: 'Команда АйтиШторма за такой короткий промежуток времени сделала невозможное: от простой фирмы по услуге продвижения выросла в мощный блог о важности личного бренда. Класс!'
         },
     ]
+
+    ngOnInit():void {
+        this.articleService.getPopularArticles()
+            .subscribe({
+                next: (data:DefaultResponseType|PopularArticlesResponseType[])=>{
+                    let error = null;
+                    if ((data as DefaultResponseType).error !== undefined) {
+                        error = (data as DefaultResponseType).message;
+                    }
+                    if (error) {
+                        this._snackBar.open(error);
+                        throw new Error(error);
+                    }
+                    this.popularArticles = data as PopularArticlesResponseType[];
+                },
+                error:(errorResponse:HttpErrorResponse)=>{
+                    if (errorResponse.error && errorResponse.error.message) {
+                        this._snackBar.open(errorResponse.error.message);
+                    } else {
+                        this._snackBar.open('Ошибка. Позвоните нам либо закажите обратный звонок');
+                    }
+                }
+            })
+    }
 }

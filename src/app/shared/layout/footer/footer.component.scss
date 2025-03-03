@@ -54,6 +54,8 @@
           margin-bottom: 10px;
         }
         .footer-additional-info-text {
+          text-decoration: none;
+          cursor: pointer;
           line-height: 20.8px;
           color:$dark-blue-main;
           margin-bottom: 10px;
@@ -64,6 +66,7 @@
         &.phone {
           max-width: 153px;
           .button {
+            margin-top: 10px;
             font-size: 12px;
             padding: 10px 20px;
             width: 153px;

@@ -22,11 +22,7 @@
           li {
             list-style: none;
             margin-right: 30px;
-            &.active {
-              a {
-                color:$light-blue-main;
-              }
-            }
+
             a {
               text-decoration: none;
               font-family: Montserrat, sans-serif;
@@ -35,6 +31,9 @@
               color: $dark-blue-main;
               cursor: pointer;
               &:hover {
+                color:$light-blue-main;
+              }
+              &.active {
                 color:$light-blue-main;
               }
             }
@@ -46,12 +45,15 @@
         font-weight: 500;
         font-size: 16px;
         color: $light-blue-main;
-        margin-right: 141px;
+        margin-right: 20px;
         text-decoration: none;
       }
       .header-actions {
+        width: 204px;
         a {
+          cursor: pointer;
           display: flex;
+          justify-content: flex-end;
           margin-right: 7px;
           text-decoration: none;
           color: $dark-blue-main;

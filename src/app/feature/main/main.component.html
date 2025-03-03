@@ -62,14 +62,14 @@
     </div>
 </section>
 
-<section class="our-services">
+<section class="our-services" id="our-services">
     <div class="container">
         <div class="our-services-title">Услуги, которые мы предлагаем</div>
         <servicesBlock></servicesBlock>
     </div>
 </section>
 
-<section class="about-us">
+<section class="about-us" id="about-us">
     <div class="container">
         <div class="about-us-image" style="background-image: url('assets/images/page/about-us.png')"></div>
         <div class="about-us-info">
@@ -135,10 +135,12 @@
     <div class="container">
         <div class="popular-articles-title">Популярные статьи из блога</div>
         <div class="popular-articles-items">
-            <article-card></article-card>
+            <div class="popular-articles-item" *ngFor="let article of popularArticles">
+            <article-card [article]="article"></article-card>
+            </div>
         </div>
         <div class="popular-articles-action">
-            <a href="#">
+            <a routerLink="/catalogue-of-articles">
                 Перейти в блог
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5.44392 1C5.59871 1 5.75349 1.05652 5.87569 1.17765L11.1873 6.44254C12.0508 7.29849 12.0508 8.70353 11.1873 9.55948L5.87569 14.8244C5.63944 15.0585 5.2484 15.0585 5.01215 14.8244C4.7759 14.5902 4.7759 14.2026 5.01215 13.9684L10.3238 8.70353C10.7148 8.31593 10.7148 7.68608 10.3238 7.29849L5.01215 2.0336C4.7759 1.79942 4.7759 1.41182 5.01215 1.17765C5.13435 1.0646 5.28914 1 5.44392 1Z"
@@ -149,7 +151,7 @@
     </div>
 </section>
 
-<section class="reviews">
+<section class="reviews" id="reviews">
     <div class="container">
         <div class="reviews-title">Отзывы о нашей работе</div>
         <div class="reviews-carousel">
@@ -178,7 +180,7 @@
     </div>
 </section>
 
-<section class="our-location">
+<section class="our-location" id="location">
     <div class="container">
         <div class="location-map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.4962049173423!2d37.53528857688137!3d55.749881973083085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54bdcbfd1b72d%3A0x433d48214f76b256!2z0J_RgNC10YHQvdC10L3RgdC60LDRjyDQvdCw0LEuLCAxMiwg0JzQvtGB0LrQstCwLCDQoNC-0YHRgdC40Y8sIDEyMzMxNw!5e0!3m2!1sru!2sby!4v1740692315254!5m2!1sru!2sby"
