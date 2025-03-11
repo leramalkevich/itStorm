@@ -56,6 +56,8 @@
         .article-block-image {
           height: 320px;
           width: 527px;
+          background-repeat: no-repeat;
+          background-size: cover;
         }
       }
 
@@ -71,36 +73,9 @@
           max-width: 818px;
 
           .article-block-text {
-            .text {
-              &.first {
-                margin-bottom: 40px;
-              }
-            }
-
             .text-block {
               margin-bottom: 40px;
-
-              .text {
-                margin-bottom: 20px;
-
-                span {
-                  font-family: Montserrat, sans-serif;
-                  font-weight: 500;
-                  font-size: 14px;
-                  line-height: 18.2px;
-                }
-              }
-
-              .text-title {
-                font-family: Montserrat, sans-serif;
-                font-weight: 500;
-                font-size: 20px;
-                line-height: 26px;
-                margin-bottom: 20px;
-                color: $light-blue-main;
-              }
             }
-
           }
 
           .share-the-article {

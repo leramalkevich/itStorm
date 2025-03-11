@@ -29,6 +29,9 @@ html, body {
   text-align: center;
   font-size: 16px;
   padding: 15px;
+  &:disabled {
+    background-color: #BEBEBE;
+  }
 }
 
 .input {
@@ -67,4 +70,57 @@ html, body {
 
 .owl-nav.ng-star-inserted {
   display: none!important;
+}
+
+h1, h3 {
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  margin-bottom: 20px;
+  color: $light-blue-main;
+}
+
+.article-block-layout {
+  .article-card {
+    margin-bottom: 60px;
+  }
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  z-index: 99999 !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+  display: none!important;
+}
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #FFFFFF!important;
+}
+
+.mat-mdc-text-field-wrapper .mdc-text-field mdc-text-field--filled, .mdc-text-field {
+  padding: 0!important;
+}
+
+.mdc-line-ripple::before, .mdc-line-ripple::after {
+  border-bottom-style: none!important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-floating-label {
+  color: #A8ABA7!important;
+}
+
+.mat-mdc-select-arrow svg {
+  fill: #A8ABA7!important;
+}
+
+.mat-mdc-form-field-infix {
+  width: 422px!important;
+  margin-bottom: 5px!important;
+  border-radius: 5px;
+  border: 2px solid $light-blue-main;
+  padding: 17px 20px;
+}
+.mat-mdc-option:hover, .mat-mdc-select {
+  color:$light-blue-main!important;
 }

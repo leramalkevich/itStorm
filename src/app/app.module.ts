@@ -36,7 +36,6 @@ import {AuthInterceptor} from "./core/auth/auth.interceptor";
         MatSnackBarModule,
         MatMenuModule,
         AppRoutingModule,
-
     ],
     providers: [
         provideHttpClient(withInterceptorsFromDi()),

@@ -8,6 +8,7 @@ export type ArticlesResponseType = {
         image: string,
         date: Date,
         category: string,
-        url: string
+        url: string,
+        categoryUrl?:string
     }[]
 }

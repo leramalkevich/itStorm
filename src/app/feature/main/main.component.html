@@ -21,7 +21,7 @@
                                 <span>-15%</span>!
                             </div>
                             <div class="carousel-slide-action">
-                                <button class="button">Подробнее</button>
+                                <button class="button" (click)="showRequestPopup()">Подробнее</button>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <div class="carousel-slide-text">Весь декабрь у нас действует акция на работу копирайтера.
                             </div>
                             <div class="carousel-slide-action">
-                                <button class="button">Подробнее</button>
+                                <button class="button" (click)="showRequestPopup()">Подробнее</button>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="carousel-slide-text">Мы благодарим каждого, кто голосовал за нас!</div>
                             <div class="carousel-slide-action">
-                                <button class="button">Подробнее</button>
+                                <button class="button" (click)="showRequestPopup()">Подробнее</button>
                             </div>
                         </div>
                     </div>
@@ -236,3 +236,5 @@
         </div>
     </div>
 </section>
+
+<app-service-request></app-service-request>

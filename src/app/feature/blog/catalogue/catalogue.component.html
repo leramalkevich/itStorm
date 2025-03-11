@@ -3,9 +3,9 @@
         <div class="blog-page-title">Блог</div>
         <div class="blog-page-head">
             <div class="blog-applied-filters">
-                <div class="blog-applied-filter">
-                    <span>Дизайн</span>
-                    <a href="#">
+                <div class="blog-applied-filter" *ngFor="let appliedFilter of appliedFilters">
+                    <span>{{appliedFilter.name}}</span>
+                    <a (click)="removeFilter(appliedFilter)">
                         <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_16193_586)">
                                 <line x1="1.93553" y1="3.15002" x2="13.9563" y2="15.1708" stroke="#709FDC" stroke-linecap="round"/>
@@ -23,48 +23,9 @@
                     </svg>
                 </div>
                 <div class="blog-sorting-body">
-                    <div class="blog-sorting-item">
-                        <span>Фриланс</span>
-                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
-                        </svg>
-
-                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
-                        </svg>
-                    </div>
-                    <div class="blog-sorting-item">
-                        <span>Дизайн</span>
-                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
-                        </svg>
-
-                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
-                        </svg>
-                    </div>
-                    <div class="blog-sorting-item">
-                        <span>SMM</span>
-                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
-                        </svg>
-
-                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
-                        </svg>
-                    </div>
-                    <div class="blog-sorting-item active">
-                        <span>Таргет</span>
-                        <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
-                        </svg>
-
-                        <svg class="added" width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0.44 2.24H6.728V0.752H0.44V2.24Z" fill="#071739"/>
-                        </svg>
-                    </div>
-                    <div class="blog-sorting-item">
-                        <span>Копирайтинг</span>
+                    <div class="blog-sorting-item" *ngFor="let sortingOption of sortingOptions" (click)="sort(sortingOption.url)"
+                    [class.active]="sortingOption.active ? sortingOption.active === true : false">
+                        <span>{{sortingOption.name}}</span>
                         <svg class="add-to-sorting" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.12 4.904H6.656V0.511999H5.144V4.904H0.68V6.32H5.144V10.688H6.656V6.32H11.12V4.904Z" fill="#BEBEBE"/>
                         </svg>
@@ -79,17 +40,18 @@
         <div class="blog-articles">
             <article-card *ngFor="let article of articles?.items" [article]="article"></article-card>
         </div>
-        <div class="blog-page-pagination">
-            <div class="pagination-arrow">
-                <img src="/assets/images/page/catalogue/previous-pagination-active.png" alt="Active backward arrow">
-<!--                <img src="/assets/images/page/catalogue/previous-pagination-disabled.png" alt="Disabled backward arrow">-->
+        <div class="blog-page-pagination" *ngIf="pages.length > 1">
+            <div class="pagination-arrow left" [class.disabled]="activeParams.page ? activeParams.page === 1 : true" (click)="openPrevPage()">
+                <img class="active-backward-arrow" src="/assets/images/page/catalogue/previous-pagination-active.png" alt="Active backward arrow">
+                <img class="disabled-backward-arrow" src="/assets/images/page/catalogue/previous-pagination-disabled.png" alt="Disabled backward arrow">
             </div>
-            <div class="pagination-pages">
-                <a href="#" class="pagination-page">1</a>
+            <div class="pagination-pages" *ngFor="let page of pages">
+                <a class="pagination-page" (click)="openPage(page)"
+                   [class.active]="this.activeParams.page ? this.activeParams.page === page : (page === 1)">{{page}}</a>
             </div>
-            <div class="pagination-arrow">
-                <img src="/assets/images/page/catalogue/next-pagination-active.png" alt="Active forward arrow">
-<!--                <img src="/assets/images/page/catalogue/next-pagination-disabled.png" alt="Disabled forward arrow">-->
+            <div class="pagination-arrow right" [class.disabled]="activeParams.page ? activeParams.page === pages.length : false" (click)="openNextPage()">
+                <img class="active-forward-arrow" src="/assets/images/page/catalogue/next-pagination-active.png" alt="Active forward arrow">
+                <img class="disabled-forward-arrow" src="/assets/images/page/catalogue/next-pagination-disabled.png" alt="Disabled forward arrow">
             </div>
         </div>
     </div>

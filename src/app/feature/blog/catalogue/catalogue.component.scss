@@ -149,11 +149,45 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        &.left {
+          margin-right: 20px;
+          .active-backward-arrow {
+            display: block;
+          }
+          .disabled-backward-arrow {
+            display: none;
+          }
+        }
+        &.left.disabled{
+          .active-backward-arrow {
+            display: none;
+          }
+          .disabled-backward-arrow {
+            display: block;
+          }
+        }
+        &.right {
+          margin-left: 20px;
+          .active-forward-arrow {
+            display: block;
+          }
+          .disabled-forward-arrow {
+            display: none;
+          }
+        }
+        &.right.disabled {
+          .active-forward-arrow {
+            display: none;
+          }
+          .disabled-forward-arrow {
+            display: block;
+          }
+        }
       }
 
       .pagination-pages {
-        margin-left: 40px;
-        margin-right: 40px;
+        margin-left: 20px;
+        margin-right: 20px;
         display: flex;
         align-items: center;
 

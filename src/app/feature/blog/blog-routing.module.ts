@@ -5,7 +5,7 @@ import {ArticleComponent} from "./article/article.component";
 
 const routes: Routes = [
   {path:'catalogue-of-articles', component: CatalogueComponent},
-  {path:'article', component: ArticleComponent},
+  {path:'article/:url', component: ArticleComponent},
 ];
 
 @NgModule({

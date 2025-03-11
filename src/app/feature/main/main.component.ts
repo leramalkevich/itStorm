@@ -6,6 +6,7 @@ import {PopularArticlesResponseType} from "../../../types/popular-articles-respo
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {throwError} from "rxjs";
+import {ServiceRequestPopupService} from "../../shared/services/service-request-popup.service";
 
 @Component({
     selector: 'app-main',
@@ -16,7 +17,7 @@ import {throwError} from "rxjs";
 export class MainComponent implements OnInit {
     private _snackBar = inject(MatSnackBar);
     public popularArticles:PopularArticlesResponseType[]=[];
-    constructor(private articleService:ArticleService) {
+    constructor(private articleService:ArticleService, private serviceRequestPopupService:ServiceRequestPopupService) {
     }
     customOptions: OwlOptions = {
         loop: true,
@@ -26,6 +27,8 @@ export class MainComponent implements OnInit {
         dots: true,
         navSpeed: 700,
         navText: ['', ''],
+        autoplay: true,
+        smartSpeed: 600,
         responsive: {
             0: {
                 items: 1
@@ -106,5 +109,9 @@ export class MainComponent implements OnInit {
                     }
                 }
             })
+    }
+
+    showRequestPopup():void{
+        this.serviceRequestPopupService.show();
     }
 }

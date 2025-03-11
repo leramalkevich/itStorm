@@ -3,74 +3,24 @@
         <div class="article-breads">
             <a routerLink="/catalogue-of-articles">Блог</a>
             <div>/</div>
-            <a href="#" class="active-link">Дизайн-ревью: в чем его преимущества и особенности?</a>
+            <a routerLink="/article/{{article.url}}" class="active-link">{{article.title}}</a>
         </div>
         <div class="article-block">
             <div class="article-block-header">
                 <div class="article-block-header-text">
-                    <div class="article-block-header-text-title">Дизайн-ревью: в чем его преимущества и особенности?
+                    <div class="article-block-header-text-title">{{article.title}}
                     </div>
                     <div class="article-block-header-text-subtitle">
-                        Узнайте, что такое дизайн-ревью и для чего проводить. Не всегда разработчики и дизайнеры
-                        понимают ценность дизайн-ревью. Разбираем, как внедрение этого процесса повышает эффективность
-                        работы всей команды.
+                        {{article.description}}
                     </div>
                 </div>
                 <div class="article-block-image"
-                     style="background-image: url('/assets/images/page/article-page.png')"></div>
+                     style="background-image: url({{serverStaticPath + article.image}})"></div>
             </div>
             <div class="article-block-main">
                 <div class="article-block-main-text">
                     <div class="article-block-text">
-                        <div class="text first">Что такое дизайн-ревью? Это процесс, в ходе которого дизайнер оценивает
-                            результаты
-                            разработки до релиза проекта, указывает на недочеты и вносит предложения по доработке
-                            дизайна. В
-                            некоторых компаниях этот процесс может называться по-другому, но суть остается той же.
-                        </div>
-                        <div class="text-block">
-                            <div class="text-title">Какие задачи решает дизайн-ревью?</div>
-                            <div class="text">Не всегда тимлид, разработчики, тестировщики и сами дизайнеры понимают,
-                                для чего
-                                внедрять дизайн-ревью. В действительности это очень важный этап работы над любым
-                                IT-проектом,
-                                решающий сразу несколько задач:
-                            </div>
-                            <div class="text">
-                                <span>Дизайнер получает целостное представление об итогах своей работы</span>
-                                Без дизайн-ревью со временем у дизайнера появляется ощущение, что он работает «в стол».
-                                А это может
-                                перерасти в выгорание, особенно если в продакшн выкладывается совсем не то, что
-                                предлагал дизайнер
-                            </div>
-                            <div class="text">
-                                <span> Улучшается взаимодействие внутри команды</span>
-                                Дизайн-ревью помогает разработчикам и тестировщикам делать свою работу еще лучше.
-                                Дизайнер указывает
-                                им на незаметные неспециалисту мелочи, которые важны для привлечения внимания
-                                пользователей или
-                                облегчения восприятия интерфейса в целом
-                            </div>
-                            <div class="text">
-                                <span> Сокращение сроков разработки</span>
-                                Когда внешний вид продукта контролируется дизайнером на всех этапах, временные затраты
-                                на доработку
-                                проекта перед самым релизом или после него снижаются
-                            </div>
-                            <div class="text">
-                                <span>Улучшение качества продукта</span>
-                                Когда дизайнер и разработчик общаются напрямую в ходе дизайн-ревью, это позволяет
-                                быстрее вносить
-                                правки, совершенствуя качество и внешний вид продукта в целом
-                            </div>
-                            <div class="text">
-                                Отметим, что дизайн-ревью происходит не после разработки, а одновременно с ней, и не
-                                увеличивает
-                                общее время работы над продуктом. Ревью, выполняемое дизайнером, может проходить до
-                                отправки на
-                                тестирование или одновременно с ним.
-                            </div>
-                        </div>
+                        <div class="text-block" [innerHTML]="article.text"></div>
                     </div>
                     <div class="share-the-article">
                         <div class="share-the-article-text">Понравилась статья? Поделитесь ею в своих социальных сетях!</div>
@@ -228,7 +178,7 @@
 
                 <div class="article-block-layout">
                     <div class="article-block-layout-title">Читайте также:</div>
-                    <article-card></article-card>
+                    <article-card *ngFor="let relatedArticle of relatedArticles" [article]="relatedArticle"></article-card>
                 </div>
             </div>
         </div>

@@ -12,7 +12,7 @@ import {ViewportScroller} from "@angular/common";
 export class HeaderComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
   isLogged:boolean = false;
-  constructor(private authService:AuthService, private scroller:ViewportScroller) {
+  constructor(private authService:AuthService) {
     this.isLogged = this.authService.getIsLoggedIn();
   }
 

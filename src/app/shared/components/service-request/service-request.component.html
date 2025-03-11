@@ -1,36 +1,46 @@
 <div class="popup" *ngIf="isShown">
     <div class="container">
-        <div class="popup-close" (click)="popupService.hide()">
+        <div class="popup-close" (click)="serviceRequestPopupService.hide()">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <line x1="1.93562" y1="2.6499" x2="13.9564" y2="14.6707" stroke="#BEBEBE" stroke-linecap="round"/>
                 <line x1="13.9236" y1="2.62971" x2="1.90277" y2="14.6505" stroke="#BEBEBE" stroke-linecap="round"/>
             </svg>
         </div>
-        <div class="popup-inner-text order-a-call" [formGroup]="callBackForm" *ngIf="!successfulRequest">
-            <div class="popup-title">
-                Закажите бесплатную консультацию!
-            </div>
+        <div class="popup-inner-text order-a-call" *ngIf="!successfulRequest" [formGroup]="callBackForm">
+            <div class="popup-title">Заявка на услугу</div>
             <div class="popup-inputs">
                 <div class="popup-input">
+
+                    <mat-form-field>
+                        <mat-label>Выберите услугу</mat-label>
+                        <mat-select formControlName="service" [(ngModel)]="chosenService">
+                            @for (service of services; track service) {
+                            <mat-option [value]="service.value">{{service.title}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+                <div class="popup-input">
                     <input type="text" class="input" placeholder="Ваше имя" formControlName="name"
-                    [ngStyle]="{'border-color': callBackForm.get('name')?.invalid &&
+                           [ngStyle]="{'border-color': callBackForm.get('name')?.invalid &&
                     (callBackForm.get('name')?.dirty || callBackForm.get('name')?.touched) ? 'red' : ''}">
                 </div>
                 <div class="popup-input">
-                    <input type="text" (keydown)="numbersOnly($event)" class="input" placeholder="Ваш номер телефона" formControlName="phone"
-                    [ngStyle]="{'border-color': callBackForm.get('phone')?.invalid &&
+                    <input type="text" (keydown)="numbersOnly($event)" class="input" placeholder="Ваш номер телефона"
+                           formControlName="phone" [ngStyle]="{'border-color': callBackForm.get('phone')?.invalid &&
                     (callBackForm.get('phone')?.dirty || callBackForm.get('phone')?.touched) ? 'red' : ''}">
                 </div>
             </div>
             <div class="popup-actions">
-                <button class="button" [disabled]="callBackForm.invalid" (click)="orderConsultation()">Заказать консультацию</button>
+                <button class="button" [disabled]="callBackForm.invalid" (click)="makeRequest()">Оставить заявку</button>
             </div>
         </div>
                 <div class="popup-inner-text ordered-a-call" *ngIf="successfulRequest">
                     <div class="popup-title">Спасибо за вашу заявку!</div>
                     <div class="popup-text">Мы свяжемся с вами при первой же возможности.</div>
                     <div class="popup-actions">
-                        <button class="button ok-button" (click)="popupService.hide()">Окей</button>
+                        <button class="button ok-button" (click)="serviceRequestPopupService.hide()">Окей</button>
                     </div>
                 </div>
 
