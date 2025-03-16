@@ -7,9 +7,10 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {RouterLink} from "@angular/router";
 import { LoaderComponent } from './components/loader/loader.component';
 import { ServiceRequestComponent } from './components/service-request/service-request.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
+import { CommentComponent } from './components/comment/comment.component';
 
 @NgModule({
     declarations: [
@@ -17,14 +18,16 @@ import {MatSelectModule} from "@angular/material/select";
         ArticleCardComponent,
         PopUpComponent,
         LoaderComponent,
-        ServiceRequestComponent
+        ServiceRequestComponent,
+        CommentComponent
     ],
     exports: [
         ServicesComponent,
         ArticleCardComponent,
         PopUpComponent,
         LoaderComponent,
-        ServiceRequestComponent
+        ServiceRequestComponent,
+        CommentComponent
     ],
     imports: [
         CommonModule,
@@ -33,6 +36,7 @@ import {MatSelectModule} from "@angular/material/select";
         ReactiveFormsModule,
         MatFormFieldModule,
         MatSelectModule,
+        FormsModule
     ]
 })
 export class SharedModule { }

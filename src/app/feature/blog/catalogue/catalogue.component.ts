@@ -1,6 +1,5 @@
 import {Component, HostListener, inject, OnDestroy, OnInit} from '@angular/core';
 import {ArticlesResponseType} from "../../../../types/articles-response.type";
-import {ArticleService} from "../../../services/article.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -8,6 +7,7 @@ import {ActiveParamsType} from "../../../../types/active-params.type";
 import {debounceTime} from "rxjs";
 import {ActiveParamsUtils} from "../../../shared/utils/active-params.utils";
 import {CategoriesResponseType} from "../../../../types/categories-response.type";
+import {ArticleService} from "../../../shared/services/article.service";
 
 @Component({
     selector: 'app-catalogue',

@@ -1,12 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {OwlOptions} from "ngx-owl-carousel-o";
-import {ArticleService} from "../../services/article.service";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {PopularArticlesResponseType} from "../../../types/popular-articles-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {throwError} from "rxjs";
 import {ServiceRequestPopupService} from "../../shared/services/service-request-popup.service";
+import {ArticleService} from "../../shared/services/article.service";
 
 @Component({
     selector: 'app-main',

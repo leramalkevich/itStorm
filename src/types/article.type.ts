@@ -6,6 +6,17 @@ export type ArticleType = {
     date: Date,
     category: string,
     url: string,
-    comments: [],
+    comments: {
+        id: string,
+        text: string,
+        date: Date,
+        likesCount: number,
+        dislikesCount: number,
+        user: {
+            id: string,
+            name: string
+        }
+    }[],
+    commentsCount?:number,
     text: string
 }

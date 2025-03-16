@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
-import {DefaultResponseType} from "../../types/default-response.type";
-import {PopularArticlesResponseType} from "../../types/popular-articles-response.type";
-import {environment} from "../../environments/environment";
-import {ArticlesResponseType} from "../../types/articles-response.type";
-import {CategoriesResponseType} from "../../types/categories-response.type";
-import {ArticleType} from "../../types/article.type";
-import {RelatedArticlesType} from "../../types/related-articles.type";
-import {ActiveParamsType} from "../../types/active-params.type";
+import {Observable} from "rxjs";
+import {DefaultResponseType} from "../../../types/default-response.type";
+import {PopularArticlesResponseType} from "../../../types/popular-articles-response.type";
+import {environment} from "../../../environments/environment";
+import {ArticlesResponseType} from "../../../types/articles-response.type";
+import {ActiveParamsType} from "../../../types/active-params.type";
+import {CategoriesResponseType} from "../../../types/categories-response.type";
+import {ArticleType} from "../../../types/article.type";
+import {RelatedArticlesType} from "../../../types/related-articles.type";
 
 @Injectable({
     providedIn: 'root'
