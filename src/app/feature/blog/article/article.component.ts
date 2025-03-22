@@ -151,14 +151,15 @@ export class ArticleComponent implements OnInit {
                                 this.commentsService.getComments(params)
                                     .subscribe({
                                         next: (updateComments: CommentsResponseType) => {
-                                            if ((this.threeComments && this.article.commentsCount <=3) || this.threeComments.length === 0) {
+                                            if ((this.threeComments && this.article.commentsCount < 3) || this.threeComments.length === 0) {
                                                 this.threeComments = updateComments.comments;
                                                 this.article.commentsCount = updateComments.allCount;
                                                 this.firstThreeCommentsShown = this.threeComments.length;
-                                            } else if ((this.threeComments && this.article.commentsCount > 3) || (this.threeComments.length === 0 && this.comments.allCount !== 0)) {
+                                            } else if ((this.threeComments && this.article.commentsCount >= 3) || (this.threeComments.length === 0 && this.comments.allCount !== 0)) {
                                                 this.threeComments = updateComments.comments.slice(0, 3);
+                                                this.article.commentsCount = updateComments.allCount;
                                                 this.firstThreeCommentsShown = 3;
-                                                this.comments = {allCount:0,comments:[]};
+                                                this.comments = {allCount:updateComments.allCount,comments:[]};
                                                 this.moreComments?.nativeElement.classList.remove('hide');
                                             }
                                             if (this.threeComments.length > 0) {
