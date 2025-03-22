@@ -9,6 +9,14 @@ import {environment} from "../../../../environments/environment";
   styleUrl: './article-card.component.scss'
 })
 export class ArticleCardComponent {
-  @Input()article!:PopularArticlesResponseType;
+  @Input()article:PopularArticlesResponseType = {
+    id: '',
+    title: '',
+    description: '',
+    image: '',
+    date: new Date,
+    category: '',
+    url: ''
+  };
   serverStaticPath = environment.serverStaticPath;
 }
