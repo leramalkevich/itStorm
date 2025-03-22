@@ -1,4 +1,4 @@
-<section class="article">
+<section class="article" *ngIf="article">
     <div class="container">
         <div class="article-breads">
             <a routerLink="/catalogue-of-articles">Блог</a>
@@ -70,15 +70,14 @@
                         <div class="leave-a-comment" *ngIf="isLogged">
                             <textarea id="comment" #commentText class="input" cols="30" rows="10"
                                       placeholder="Напишите Ваш комментарий к статье..."></textarea>
-                            <button class="button" (click)="addNewComment(commentText)">Опубликовать комментарий
-                            </button>
+                            <button class="button" (click)="addNewComment(commentText)">Опубликовать комментарий</button>
                         </div>
-                        <div class="users-comments-items" *ngIf="article.comments.length > 0">
+                        <div class="users-comments-items" *ngIf="article.comments.length > 0 || threeComments.length > 0">
                             <div class="first-three-comments" *ngIf="threeComments && threeComments.length > 0">
-                                <comment *ngFor="let articleComment of threeComments" [comment]="articleComment"></comment>
+                                <comment *ngFor="let articleComment of threeComments" [comment]="articleComment" [articleId]="article.id"></comment>
                             </div>
-                            <div class="more-comments-items" *ngIf="comments && comments.comments.length > 0">
-                                <comment *ngFor="let moreComment of comments.comments" [comment]="moreComment"></comment>
+                            <div class="more-comments-items" *ngIf="comments && comments.allCount > 3" id="moreCommentsBlock">
+                                <comment *ngFor="let moreComment of comments.comments" [comment]="moreComment" [articleId]="article.id"></comment>
                             </div>
                             <div class="users-comments-pagination" #moreComments *ngIf="article.commentsCount && article.commentsCount > 3"
                                  (click)="showHiddenComments(moreComments)">

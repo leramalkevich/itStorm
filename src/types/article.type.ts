@@ -17,6 +17,6 @@ export type ArticleType = {
             name: string
         }
     }[],
-    commentsCount?:number,
+    commentsCount:number,
     text: string
 }

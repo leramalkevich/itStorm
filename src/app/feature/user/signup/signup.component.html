@@ -7,16 +7,40 @@
                     <input type="text" class="input" placeholder="Ваше имя" formControlName="name"
                            [ngStyle]="{'border-color': signupForm.get('name')?.invalid &&
                             (signupForm.get('name')?.dirty || signupForm.get('name')?.touched) ? 'red' : ''}">
+                    <div *ngIf="(signupForm.get('name')?.invalid && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched))">
+                        <div class="error-feedback" *ngIf="signupForm.get('name')?.errors?.['required']">
+                            Введите ваше имя, например: Иван либо Иван Иванов
+                        </div>
+                        <div class="error-feedback" *ngIf="signupForm.get('name')?.errors?.['pattern']">
+                            Проверьте введенные данные
+                        </div>
+                    </div>
                 </div>
                 <div class="authorization-input">
                     <input type="text" class="input" placeholder="Электронная почта" formControlName="email"
                            [ngStyle]="{'border-color': signupForm.get('email')?.invalid &&
                     (signupForm.get('email')?.dirty || signupForm.get('email')?.touched) ? 'red' : ''}">
+                    <div *ngIf="(signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched))">
+                        <div class="error-feedback" *ngIf="signupForm.get('email')?.errors?.['required']">
+                            Введите email, например: example&#64;example.com
+                        </div>
+                        <div class="error-feedback" *ngIf="signupForm.get('email')?.errors?.['email']">
+                            Проверьте введенные данные
+                        </div>
+                    </div>
                 </div>
                 <div class="authorization-input password">
                     <input type="password" class="input" placeholder="Пароль" #password formControlName="password"
                            [ngStyle]="{'border-color': signupForm.get('password')?.invalid &&
                     (signupForm.get('password')?.dirty || signupForm.get('password')?.touched) ? 'red' : ''}">
+                    <div *ngIf="(signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched))">
+                        <div class="error-feedback" *ngIf="signupForm.get('password')?.errors?.['required']">
+                            Введите пароль (не менее 8 символов)
+                        </div>
+                        <div class="error-feedback" *ngIf="signupForm.get('password')?.errors?.['pattern']">
+                            Должен содержать хотя бы 1 цифру и букву в верхнем регистре
+                        </div>
+                    </div>
                     <a class="password-control" (click)="togglePassword()">
                         <svg *ngIf="password.type === 'password'" xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 576 512">
@@ -38,6 +62,9 @@
                     <label for="agree">
                         Я принимаю <a routerLink="/legal-terms" fragment="terms-agreement" target="_blank">условия пользовательского соглашения</a>
                         и даю <a routerLink="/legal-terms" fragment="personal-data-agreement" target="_blank">согласие на обработку персональных данных</a>.</label>
+                </div>
+                <div class="error-feedback" *ngIf="signupForm.get('agree')?.invalid && (signupForm.get('agree')?.dirty || !signupForm.get('agree')?.untouched)">
+                    Необходимо дать согласие
                 </div>
             </div>
             <div class="authorization-button">

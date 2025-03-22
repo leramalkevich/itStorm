@@ -6,6 +6,8 @@ import {DefaultResponseType} from "../../../../types/default-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
+import {UserService} from "../../../shared/services/user.service";
+import {UserInfoResponseType} from "../../../../types/user-info-response.type";
 
 @Component({
     selector: 'app-login',
@@ -23,7 +25,7 @@ export class LoginComponent {
     });
     @ViewChild('password') password!: ElementRef;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     }
 
     login(): void {
@@ -46,7 +48,17 @@ export class LoginComponent {
 
                         //   setting tokens
                         this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
-                        this.authService.userId = loginResponse.userId;
+                        this.userService.getUserInfo()
+                            .subscribe({
+                                next: (userInfo: DefaultResponseType | UserInfoResponseType) => {
+                                    if ((userInfo as DefaultResponseType).error && (userInfo as DefaultResponseType).message) {
+                                        this._snackBar.open((userInfo as DefaultResponseType).message);
+                                    }
+                                    if (userInfo as UserInfoResponseType) {
+                                        this.authService.setUserInfo(userInfo as UserInfoResponseType);
+                                    }
+                                }
+                            });
 
                         this._snackBar.open('Вы успешно авторизировались');
                         this.router.navigate(['/']);
@@ -63,7 +75,7 @@ export class LoginComponent {
     }
 
     togglePassword() {
-        if (this.password.nativeElement.getAttribute('type')=='password') {
+        if (this.password.nativeElement.getAttribute('type') == 'password') {
             this.password.nativeElement.setAttribute('type', 'text');
         } else {
             this.password.nativeElement.setAttribute('type', 'password');

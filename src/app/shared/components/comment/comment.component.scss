@@ -71,6 +71,9 @@
       &.dislikes {
         span {
           color: $dark-blue-main;
+          &.active {
+            color: $light-blue-main;
+          }
         }
       }
     }

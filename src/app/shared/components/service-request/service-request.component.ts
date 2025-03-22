@@ -25,7 +25,7 @@ export class ServiceRequestComponent implements OnInit {
     ]
     callBackForm = this.fb.group({
         name: ['', [Validators.required, Validators.pattern(/^[А-Яа-я]+\s*$/)]],
-        phone: ['', [Validators.required, Validators.pattern(/^(\+\d{12}\s*$|\d{11}\s*$)/)]],
+        phone: ['', [Validators.required, Validators.pattern(/^((\+7|7|8)+([0-9]){10})\s*$/)]],
         service: [this.chosenService, [Validators.required]],
         type: ['order']
     });
@@ -36,6 +36,10 @@ export class ServiceRequestComponent implements OnInit {
     ngOnInit(): void {
         this.serviceRequestPopupService.show$.subscribe((isShown: boolean) => {
             this.isShown = isShown;
+            this.callBackForm.get('name')?.reset();
+            this.callBackForm.get('name')?.markAsUntouched();
+            this.callBackForm.get('phone')?.reset();
+            this.callBackForm.get('phone')?.markAsUntouched();
         });
         this.serviceRequestPopupService.selectedValue$.subscribe((title: string) => {
             this.chosenService = title;
@@ -65,7 +69,9 @@ export class ServiceRequestComponent implements OnInit {
                             this.serviceRequestPopupService.successfulRequest$.subscribe((request: boolean) => {
                                 this.successfulRequest = request;
                                 this.callBackForm.get('name')?.reset();
+                                this.callBackForm.get('name')?.markAsUntouched();
                                 this.callBackForm.get('phone')?.reset();
+                                this.callBackForm.get('phone')?.markAsUntouched();
                             });
                         }
                     }, error: (errorResponse: HttpErrorResponse) => {

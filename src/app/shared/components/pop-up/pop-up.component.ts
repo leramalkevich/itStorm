@@ -18,7 +18,7 @@ export class PopUpComponent implements OnInit {
     successfulRequest:boolean=false;
     callBackForm = this.fb.group({
         name: ['', [Validators.required, Validators.pattern(/^[А-Яа-я]+\s*$/)]],
-        phone: ['', [Validators.required, Validators.pattern(/^(\+\d{12}\s*$|\d{11}\s*$)/)]],
+        phone: ['', [Validators.required, Validators.pattern(/^((\+7|7|8)+([0-9]){10})\s*$/)]],
         type: ['consultation']
     });
 
@@ -28,6 +28,10 @@ export class PopUpComponent implements OnInit {
     ngOnInit() {
         this.popupService.isShown$.subscribe((isShown: boolean) => {
             this.isShown = isShown;
+            this.callBackForm.get('name')?.markAsUntouched();
+            this.callBackForm.get('name')?.reset();
+            this.callBackForm.get('phone')?.markAsUntouched();
+            this.callBackForm.get('phone')?.reset();
         });
     }
 
@@ -53,7 +57,9 @@ export class PopUpComponent implements OnInit {
                             this.popupService.successfulRequest$.subscribe((request:boolean)=>{
                                 this.successfulRequest = request;
                                 this.callBackForm.get('name')?.reset();
+                                this.callBackForm.get('name')?.markAsUntouched();
                                 this.callBackForm.get('phone')?.reset();
+                                this.callBackForm.get('phone')?.markAsUntouched();
                             });
                         }
                     }, error: (errorResponse: HttpErrorResponse) => {

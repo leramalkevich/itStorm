@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {LoginResponseType} from "../../../../types/login-response.type";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
+import {UserInfoResponseType} from "../../../../types/user-info-response.type";
+import {UserService} from "../../../shared/services/user.service";
 
 @Component({
     selector: 'app-signup',
@@ -17,14 +19,14 @@ export class SignupComponent {
     private fb = inject(FormBuilder);
     private _snackBar = inject(MatSnackBar);
     signupForm = this.fb.group({
-        name: ['', [Validators.required, Validators.pattern(/^[А-Яа-я]+\s*$/)]],
+        name: ['', [Validators.required, Validators.pattern(/^[А-Я][а-я]+\s*([А-Я][а-я]+\s*)*$/)]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]],
         agree: [false, [Validators.requiredTrue]]
     });
     @ViewChild('password')password!:ElementRef;
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService, private userService:UserService, private router: Router) {
     }
 
     signup() {
@@ -47,7 +49,18 @@ export class SignupComponent {
 
                         //   setting tokens and informing about success
                         this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
-                        this.authService.userId = loginResponse.userId;
+                        this.userService.getUserInfo()
+                            .subscribe({
+                                next: (userInfo: DefaultResponseType | UserInfoResponseType) => {
+                                    if ((userInfo as DefaultResponseType).error && (userInfo as DefaultResponseType).message) {
+                                        this._snackBar.open((userInfo as DefaultResponseType).message);
+                                    }
+                                    if (userInfo as UserInfoResponseType) {
+                                        this.authService.setUserInfo(userInfo as UserInfoResponseType);
+                                    }
+                                }
+                            });
+
                         this._snackBar.open('Вы успешно зарегистрировались');
                         this.router.navigate(['/']);
 

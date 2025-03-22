@@ -110,7 +110,8 @@ export class MainComponent implements OnInit {
             })
     }
 
-    showRequestPopup():void{
+    showRequestPopup(title:string):void{
         this.serviceRequestPopupService.show();
+        this.serviceRequestPopupService.selectedValue$.next(title);
     }
 }

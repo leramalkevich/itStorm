@@ -15,11 +15,27 @@
                     <input type="text" class="input" placeholder="Ваше имя" formControlName="name"
                     [ngStyle]="{'border-color': callBackForm.get('name')?.invalid &&
                     (callBackForm.get('name')?.dirty || callBackForm.get('name')?.touched) ? 'red' : ''}">
+                    <div *ngIf="(callBackForm.get('name')?.invalid && (callBackForm.get('name')?.dirty || callBackForm.get('name')?.touched))">
+                        <div class="error-feedback" *ngIf="callBackForm.get('name')?.errors?.['required']">
+                            Введите имя, например: Иван
+                        </div>
+                        <div class="error-feedback" *ngIf="callBackForm.get('name')?.errors?.['pattern']">
+                            Проверьте введенные данные
+                        </div>
+                    </div>
                 </div>
                 <div class="popup-input">
                     <input type="text" (keydown)="numbersOnly($event)" class="input" placeholder="Ваш номер телефона" formControlName="phone"
                     [ngStyle]="{'border-color': callBackForm.get('phone')?.invalid &&
                     (callBackForm.get('phone')?.dirty || callBackForm.get('phone')?.touched) ? 'red' : ''}">
+                    <div *ngIf="(callBackForm.get('phone')?.invalid && (callBackForm.get('phone')?.dirty || callBackForm.get('phone')?.touched))">
+                        <div class="error-feedback" *ngIf="callBackForm.get('phone')?.errors?.['required']">
+                            Введите номер в формате +74991112233 либо 84991112233
+                        </div>
+                        <div class="error-feedback" *ngIf="callBackForm.get('phone')?.errors?.['pattern']">
+                            Проверьте введенные данные
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="popup-actions">

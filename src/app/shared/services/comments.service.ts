@@ -33,4 +33,7 @@ export class CommentsService {
     getActionsForComment(commentId: string): Observable<DefaultResponseType | CommentActionsType[]> {
         return this.http.get<DefaultResponseType | CommentActionsType[]>(environment.api + 'comments/' + commentId + '/actions');
     }
+    getUserArticleCommentActions(articleId: string): Observable<DefaultResponseType | {comment:string, action:string}[]> {
+        return this.http.get<DefaultResponseType | {comment:string, action:string}[]>(environment.api + 'comments/article-comment-actions?articleId=' + articleId);
+    }
 }

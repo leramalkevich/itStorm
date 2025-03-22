@@ -1,11 +1,11 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {CommentType} from "../../../../types/comment.type";
 import {DefaultResponseType} from "../../../../types/default-response.type";
-import {CommentActionsType} from "../../../../types/comment-actions.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CommentsService} from "../../services/comments.service";
 import {AuthService} from "../../../core/auth/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CommentsResponseType} from "../../../../types/comments-response.type";
 
 @Component({
     selector: 'comment',
@@ -15,7 +15,19 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class CommentComponent implements OnInit {
     private _snackBar = inject(MatSnackBar);
-    @Input() comment!: CommentType;
+    @Input() articleId: string = '';
+    @Input() comment: CommentType = {
+        id: '',
+        text: '',
+        date: new Date(),
+        likesCount: 0,
+        dislikesCount: 0,
+        user: {
+            id: '',
+            name: ''
+        },
+        action: ''
+    };
     isLogged: boolean = false;
     countLikes: number = 0;
     countDislikes: number = 0;
@@ -28,22 +40,6 @@ export class CommentComponent implements OnInit {
         if (this.comment) {
             this.countLikes = this.comment.likesCount;
             this.countDislikes = this.comment.dislikesCount;
-            if (this.isLogged) {
-                this.commentsService.getActionsForComment(this.comment.id)
-                    .subscribe({
-                        next: (commentActions: DefaultResponseType | CommentActionsType[]) => {
-                            if ((commentActions as DefaultResponseType).error && (commentActions as DefaultResponseType).message) {
-
-                            }
-                            if ((commentActions as CommentActionsType[]).length > 0) {
-                                const commentWithAction = (commentActions as CommentActionsType[]).find(id => id.comment === this.comment.id);
-                                if (commentWithAction) {
-                                    this.comment.action = commentWithAction.action;
-                                }
-                            }
-                        }
-                    });
-            }
         }
     }
 
@@ -58,59 +54,38 @@ export class CommentComponent implements OnInit {
                         if (reaction === 'violate' && !data.error) {
                             this._snackBar.open('Жалоба отправлена');
                         }
-                        this.commentsService.getActionsForComment(commentId)
-                            .subscribe({
-                                next: (actionsResponse: DefaultResponseType | CommentActionsType[]) => {
-                                    if ((actionsResponse as DefaultResponseType).error && (actionsResponse as DefaultResponseType).message) {
-                                        this._snackBar.open((actionsResponse as DefaultResponseType).message);
-                                    }
-                                    if ((actionsResponse as CommentActionsType[]).length > 0) {
-                                        const actionsForComment = actionsResponse as CommentActionsType[];
-                                        if (actionsForComment) {
-                                            const foundComment = actionsForComment.find(item => item.comment === this.comment.id);
-                                            if (foundComment) {
-                                                if (this.comment.action) {
-                                                    if (this.comment.action === 'like' && foundComment.action === 'like') {
-                                                        this.countLikes--;
-                                                    } else if (this.comment.action === 'dislike' && foundComment.action === 'dislike') {
-                                                        this.countDislikes--;
-                                                    } else if (this.comment.action === 'dislike' && foundComment.action === 'like') {
-                                                        this.countDislikes--;
-                                                        this.countLikes++;
-                                                    } else if (this.comment.action === 'like' && foundComment.action === 'dislike') {
-                                                        this.countLikes--;
-                                                        this.countDislikes++;
-                                                    }
-                                                }
-                                                if (this.comment.action === null && foundComment.action === 'like') {
-                                                    if (this.comment.likesCount !== 0) {
-                                                        this.countLikes = this.comment.likesCount;
-                                                    } else {
-                                                        this.countLikes++;
-                                                    }
-                                                } else if (this.comment.action === null && foundComment.action === 'dislike') {
-                                                    if (this.comment.dislikesCount !== 0) {
-                                                        this.countDislikes = this.comment.dislikesCount;
-                                                    } else {
-                                                        this.countDislikes++;
-                                                    }
-                                                }
-                                                this.comment.action = foundComment.action;
-                                            }
-                                        }
-                                    } else {
-                                        if (this.comment.action && this.comment.action === reaction) {
-                                            if (this.comment.action === 'like' && reaction === 'like') {
-                                                this.countLikes--;
-                                            } else if (this.comment.action === 'dislike' && reaction === 'dislike') {
-                                                this.countDislikes = this.comment.dislikesCount--;
-                                            }
-                                        }
+                        const params = {
+                            offset: 0,
+                            article: this.articleId
+                        }
+                        if (params) {
+                            this.commentsService.getComments(params)
+                                .subscribe({
+                                    next: (updatedComments: CommentsResponseType) => {
+                                        const changedCommentAction = updatedComments.comments.find(item => item.id === this.comment.id);
+                                        if (changedCommentAction) {
+                                            this.comment = changedCommentAction;
 
-                                        this.comment.action = null;
+                                            this.commentsService.getUserArticleCommentActions(this.articleId)
+                                                .subscribe({
+                                                    next: (userActionsResponse: DefaultResponseType | { comment: string, action: string }[]) => {
+                                                        if (userActionsResponse as { comment: string, action: string }[]) {
+                                                            const updateAction = (userActionsResponse as { comment: string, action: string }[]).find(item => item.comment === changedCommentAction.id);
+                                                            if (updateAction) {
+                                                                changedCommentAction.action = updateAction.action;
+                                                            } else {
+                                                                delete changedCommentAction.action;
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            this.countLikes = changedCommentAction.likesCount;
+                                            this.countDislikes = changedCommentAction.dislikesCount;
+                                        }
                                     }
-                                }
-                            })
+                                });
+                        }
+
 
                     }, error: (errorResponse: HttpErrorResponse) => {
                         if (errorResponse.error && errorResponse.error.message) {
@@ -122,5 +97,4 @@ export class CommentComponent implements OnInit {
                 });
         }
     }
-
 }

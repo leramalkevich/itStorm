@@ -6,7 +6,7 @@
     <div class="article-card-info">
         <div class="article-card-title">{{article.title}}</div>
         <div class="article-card-text">
-            {{article.description}}
+            {{article.description | sliceText: article.title.length}}
         </div>
     </div>
 

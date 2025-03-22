@@ -11,6 +11,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import { CommentComponent } from './components/comment/comment.component';
+import { SliceTextPipe } from './pipes/slice-text.pipe';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { CommentComponent } from './components/comment/comment.component';
         PopUpComponent,
         LoaderComponent,
         ServiceRequestComponent,
-        CommentComponent
+        CommentComponent,
+        SliceTextPipe
     ],
     exports: [
         ServicesComponent,

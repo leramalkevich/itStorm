@@ -4,6 +4,7 @@ import {Observable, Subject, throwError} from "rxjs";
 import {LoginResponseType} from "../../../types/login-response.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {environment} from "../../../environments/environment";
+import {UserInfoResponseType} from "../../../types/user-info-response.type";
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +12,12 @@ import {environment} from "../../../environments/environment";
 export class AuthService {
     public accessTokenKey: string = 'accessToken';
     public refreshTokenKey: string = 'refreshToken';
-    public userIdKey: string = 'userId';
+    public userInfoKey: string = 'userInfo';
     public isLogged$: Subject<boolean> = new Subject<boolean>();
     public isLogged: boolean = false;
 
     constructor(private http: HttpClient) {
+        this.isLogged = !!localStorage.getItem(this.accessTokenKey);
     }
 
     login(email: string, password: string, rememberMe: boolean): Observable<LoginResponseType | DefaultResponseType> {
@@ -30,14 +32,14 @@ export class AuthService {
         });
     }
 
-    refresh():Observable<DefaultResponseType|LoginResponseType>{
+    refresh(): Observable<DefaultResponseType | LoginResponseType> {
         const tokens = this.getTokens();
         if (tokens && tokens.refreshToken) {
-            return this.http.post<DefaultResponseType|LoginResponseType>(environment.api+'refresh', {
+            return this.http.post<DefaultResponseType | LoginResponseType>(environment.api + 'refresh', {
                 refreshToken: tokens.refreshToken
             });
         }
-        throw throwError(()=>'Can not use token');
+        throw throwError(() => 'Can not use token');
     }
 
     logout(): Observable<DefaultResponseType> {
@@ -71,17 +73,26 @@ export class AuthService {
         }
     }
 
-    get userId(): null | string {
-        return localStorage.getItem(this.userIdKey);
+    public getUserInfo(): null | UserInfoResponseType {
+        const userInfo: string | null = localStorage.getItem(this.userInfoKey);
+        if (userInfo) {
+            return JSON.parse(userInfo);
+        }
+        return null;
     }
 
-    set userId(id: string | null) {
-        if (id) {
-            localStorage.setItem(this.userIdKey, id);
+    public setUserInfo(info: UserInfoResponseType) {
+        if (info) {
+            localStorage.setItem(this.userInfoKey, JSON.stringify(info));
         } else {
-            localStorage.removeItem(this.userIdKey);
+            localStorage.removeItem(this.userInfoKey);
         }
     }
+
+    public removeUserInfo(): void {
+        localStorage.removeItem(this.userInfoKey);
+    }
+
     public getIsLoggedIn() {
         return this.isLogged;
     }

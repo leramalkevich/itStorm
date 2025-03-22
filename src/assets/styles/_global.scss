@@ -124,3 +124,11 @@ h1, h3 {
 .mat-mdc-option:hover, .mat-mdc-select {
   color:$light-blue-main!important;
 }
+
+.ng-star-inserted .error-feedback.ng-star-inserted, .error-feedback {
+  text-align: left;
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
