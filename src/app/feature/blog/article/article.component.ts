@@ -11,6 +11,7 @@ import {CommentsResponseType} from "../../../../types/comments-response.type";
 import {AuthService} from "../../../core/auth/auth.service";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {CommentType} from "../../../../types/comment.type";
+import {CommentActionsType} from "../../../../types/comment-actions.type";
 
 @Component({
     selector: 'app-article',
@@ -39,7 +40,7 @@ export class ArticleComponent implements OnInit {
                 name: ''
             }
         }],
-        commentsCount:0,
+        commentsCount: 0,
         text: ''
     };
     threeComments: CommentType[] = [];
@@ -62,7 +63,7 @@ export class ArticleComponent implements OnInit {
     serverStaticPath = environment.serverStaticPath;
     isLogged: boolean = false;
     firstThreeCommentsShown: number = 0;
-    @ViewChild('moreComments')moreComments:ElementRef|undefined;
+    @ViewChild('moreComments') moreComments: ElementRef | undefined;
 
     constructor(private articleService: ArticleService, private activatedRoute: ActivatedRoute,
                 private commentsService: CommentsService, private authService: AuthService, private router: Router) {
@@ -132,6 +133,64 @@ export class ArticleComponent implements OnInit {
         });
     }
 
+    userReactionChangeHandler(comment: CommentType) {
+        let offset = 0;
+        if (this.firstThreeCommentsShown <= 3) {
+            offset = 0;
+        } else if (this.firstThreeCommentsShown > 3 && this.firstThreeCommentsShown <= 13) {
+            offset = 3;
+        } else if (this.firstThreeCommentsShown > 13) {
+            offset = this.firstThreeCommentsShown - 10;
+        }
+
+        const params = {offset: offset, article: this.article.id};
+        if (params) {
+            this.commentsService.getComments(params)
+                .subscribe({
+                    next: (comments: CommentsResponseType) => {
+                        const updatedComment = comments.comments.find(item => item.id === comment.id);
+                        if (updatedComment) {
+                            this.commentsService.getActionsForComment(updatedComment.id)
+                                .subscribe({
+                                    next: (data: DefaultResponseType | CommentActionsType[]) => {
+                                        if ((data as DefaultResponseType).error && (data as DefaultResponseType).message) {
+                                            this._snackBar.open((data as DefaultResponseType).message);
+                                        }
+                                        if ((data as CommentActionsType[]).length > 0) {
+                                            const updateUserReaction = (data as CommentActionsType[]).find(item => item.comment === updatedComment.id);
+                                            if (updateUserReaction) {
+                                                updatedComment.action = updateUserReaction.action;
+                                                comment.action = updatedComment.action;
+                                            } else {
+                                                delete updatedComment.action;
+                                                comment.action = updatedComment.action;
+                                            }
+                                        } else {
+                                            delete updatedComment.action;
+                                            comment.action = updatedComment.action;
+                                        }
+                                    }
+                                });
+                            comment.likesCount = updatedComment.likesCount;
+                            comment.dislikesCount = updatedComment.dislikesCount;
+                            if (this.threeComments.length > 0) {
+                                const replaceComment = this.threeComments.findIndex(item => item.id === comment.id);
+                                if (replaceComment !== -1) {
+                                    this.threeComments[replaceComment] = comment;
+                                }
+                            }
+                            if (this.comments.comments.length > 0) {
+                                const replaceComment = this.comments.comments.findIndex(item => item.id === comment.id);
+                                if (replaceComment !== -1) {
+                                    this.comments.comments[replaceComment] = comment;
+                                }
+                            }
+                        }
+                    }
+                });
+        }
+    }
+
     addNewComment(text: HTMLElement): void {
         if (this.isLogged) {
             this.commentsService.addNewComment((text as HTMLInputElement).value, this.article.id)
@@ -159,7 +218,7 @@ export class ArticleComponent implements OnInit {
                                                 this.threeComments = updateComments.comments.slice(0, 3);
                                                 this.article.commentsCount = updateComments.allCount;
                                                 this.firstThreeCommentsShown = 3;
-                                                this.comments = {allCount:updateComments.allCount,comments:[]};
+                                                this.comments = {allCount: updateComments.allCount, comments: []};
                                                 this.moreComments?.nativeElement.classList.remove('hide');
                                             }
                                             if (this.threeComments.length > 0) {

@@ -74,10 +74,12 @@
                         </div>
                         <div class="users-comments-items" *ngIf="article.comments.length > 0 || threeComments.length > 0">
                             <div class="first-three-comments" *ngIf="threeComments && threeComments.length > 0">
-                                <comment *ngFor="let articleComment of threeComments" [comment]="articleComment" [articleId]="article.id"></comment>
+                                <comment *ngFor="let articleComment of threeComments" [comment]="articleComment" [amountOfCommentsShown]="firstThreeCommentsShown"
+                                         [articleId]="article.id" (userReactionChanged)="userReactionChangeHandler($event)" [countLikes]="articleComment.likesCount" [countDislikes]="articleComment.dislikesCount"></comment>
                             </div>
                             <div class="more-comments-items" *ngIf="comments && comments.allCount > 3" id="moreCommentsBlock">
-                                <comment *ngFor="let moreComment of comments.comments" [comment]="moreComment" [articleId]="article.id"></comment>
+                                <comment *ngFor="let moreComment of comments.comments" [comment]="moreComment" [amountOfCommentsShown]="firstThreeCommentsShown"
+                                         [articleId]="article.id" (userReactionChanged)="userReactionChangeHandler($event)" [countLikes]="moreComment.likesCount" [countDislikes]="moreComment.dislikesCount"></comment>
                             </div>
                             <div class="users-comments-pagination" #moreComments *ngIf="article.commentsCount && article.commentsCount > 3"
                                  (click)="showHiddenComments(moreComments)">

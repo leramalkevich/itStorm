@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {CommentsParamsType} from "../../../types/comments-params.type";
@@ -11,7 +11,6 @@ import {CommentActionsType} from "../../../types/comment-actions.type";
     providedIn: 'root'
 })
 export class CommentsService {
-
     constructor(private http: HttpClient) {
     }
 
@@ -33,7 +32,8 @@ export class CommentsService {
     getActionsForComment(commentId: string): Observable<DefaultResponseType | CommentActionsType[]> {
         return this.http.get<DefaultResponseType | CommentActionsType[]>(environment.api + 'comments/' + commentId + '/actions');
     }
-    getUserArticleCommentActions(articleId: string): Observable<DefaultResponseType | {comment:string, action:string}[]> {
-        return this.http.get<DefaultResponseType | {comment:string, action:string}[]>(environment.api + 'comments/article-comment-actions?articleId=' + articleId);
+
+    getUserArticleCommentActions(articleId: string): Observable<DefaultResponseType | { comment: string, action: string }[]> {
+        return this.http.get<DefaultResponseType | { comment: string, action: string }[]>(environment.api + 'comments/article-comment-actions?articleId=' + articleId);
     }
 }

@@ -1,11 +1,10 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnInit, Output} from '@angular/core';
 import {CommentType} from "../../../../types/comment.type";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CommentsService} from "../../services/comments.service";
 import {AuthService} from "../../../core/auth/auth.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {CommentsResponseType} from "../../../../types/comments-response.type";
 
 @Component({
     selector: 'comment',
@@ -28,9 +27,11 @@ export class CommentComponent implements OnInit {
         },
         action: ''
     };
+    @Output()userReactionChanged:EventEmitter<any>=new EventEmitter<any>();
+    @Input()amountOfCommentsShown:number = 0;
     isLogged: boolean = false;
-    countLikes: number = 0;
-    countDislikes: number = 0;
+    @Input()countLikes:number = 0;
+    @Input()countDislikes:number = 0;
 
     constructor(private commentsService: CommentsService, private authService: AuthService) {
         this.isLogged = this.authService.getIsLoggedIn();
@@ -54,38 +55,7 @@ export class CommentComponent implements OnInit {
                         if (reaction === 'violate' && !data.error) {
                             this._snackBar.open('Жалоба отправлена');
                         }
-                        const params = {
-                            offset: 0,
-                            article: this.articleId
-                        }
-                        if (params) {
-                            this.commentsService.getComments(params)
-                                .subscribe({
-                                    next: (updatedComments: CommentsResponseType) => {
-                                        const changedCommentAction = updatedComments.comments.find(item => item.id === this.comment.id);
-                                        if (changedCommentAction) {
-                                            this.comment = changedCommentAction;
-
-                                            this.commentsService.getUserArticleCommentActions(this.articleId)
-                                                .subscribe({
-                                                    next: (userActionsResponse: DefaultResponseType | { comment: string, action: string }[]) => {
-                                                        if (userActionsResponse as { comment: string, action: string }[]) {
-                                                            const updateAction = (userActionsResponse as { comment: string, action: string }[]).find(item => item.comment === changedCommentAction.id);
-                                                            if (updateAction) {
-                                                                changedCommentAction.action = updateAction.action;
-                                                            } else {
-                                                                delete changedCommentAction.action;
-                                                            }
-                                                        }
-                                                    }
-                                                });
-                                            this.countLikes = changedCommentAction.likesCount;
-                                            this.countDislikes = changedCommentAction.dislikesCount;
-                                        }
-                                    }
-                                });
-                        }
-
+                        this.userReactionChanged.emit(this.comment);
 
                     }, error: (errorResponse: HttpErrorResponse) => {
                         if (errorResponse.error && errorResponse.error.message) {
