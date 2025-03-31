@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/variables";
+@use "../../../../assets/styles/variables";
 
 .header {
   padding: 40px 0;
@@ -14,6 +14,7 @@
       .header-menu {
         margin-left: 100px;
         margin-right: 227px;
+
         ul {
           margin: 0;
           padding: 0;
@@ -28,35 +29,41 @@
               font-family: Montserrat, sans-serif;
               font-weight: 500;
               font-size: 16px;
-              color: $dark-blue-main;
+              color: variables.$dark-blue-main;
               cursor: pointer;
+
               &:hover {
-                color:$light-blue-main;
+                color: variables.$light-blue-main;
               }
+
               &.active {
-                color:$light-blue-main;
+                color: variables.$light-blue-main;
               }
             }
           }
         }
       }
+
       .header-phone {
         font-family: Montserrat, sans-serif;
         font-weight: 500;
         font-size: 16px;
-        color: $light-blue-main;
+        color: variables.$light-blue-main;
         margin-right: 20px;
         text-decoration: none;
       }
+
       .header-actions {
         width: 204px;
+
         a {
           cursor: pointer;
           display: flex;
           justify-content: flex-end;
           margin-right: 7px;
           text-decoration: none;
-          color: $dark-blue-main;
+          color: variables.$dark-blue-main;
+
           span {
             margin-top: 3px;
           }

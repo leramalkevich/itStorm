@@ -1,5 +1,5 @@
-@import "../../../../assets/styles/variables";
-@import "../../../../assets/styles/auth-form";
+@use "../../../../assets/styles/variables";
+@use "../../../../assets/styles/auth-form";
 
 .signup {
   padding-top: 123px;
@@ -9,7 +9,7 @@
 
     label {
       a {
-        color: $light-blue-main;
+        color: variables.$light-blue-main;
       }
     }
     .page-image {

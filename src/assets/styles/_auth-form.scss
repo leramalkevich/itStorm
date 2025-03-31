@@ -1,12 +1,12 @@
-@import "variables";
-@import "mixins";
+@use "variables" as variables;
+@use "mixins";
 
 .authorization-form {
   margin-top: 14px;
   margin-bottom: 28px;
 
   .authorization-title {
-    @include head-lora-36;
+    @include mixins.head-lora-36;
     margin-bottom: 30px;
   }
 
@@ -30,7 +30,7 @@
           width: 20px;
           height: 20px;
           svg path {
-            fill: $light-blue-main;
+            fill: variables.$light-blue-main;
           }
         }
       }
@@ -50,7 +50,7 @@
         margin-left: 10px;
         font-size: 14px;
         line-height: 18.2px;
-        color: $dark-blue-main;
+        color: variables.$dark-blue-main;
       }
     }
   }
@@ -66,12 +66,12 @@
   .authorization-link {
     font-size: 14px;
     line-height: 18.2px;
-    color: $dark-blue-main;
+    color: variables.$dark-blue-main;
 
     a {
       text-decoration: none;
       cursor: pointer;
-      color: $light-blue-main;
+      color: variables.$light-blue-main;
     }
   }
 }

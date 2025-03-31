@@ -1,4 +1,4 @@
-@import "variables";
+@use "variables";
 
 html {
   scroll-behavior: smooth;
@@ -13,7 +13,7 @@ html, body {
 }
 
 .container {
-  max-width: $container-width;
+  max-width: variables.$container-width;
   margin: 0 auto;
 }
 
@@ -21,7 +21,7 @@ html, body {
   border-radius: 5px;
   cursor: pointer;
   box-sizing: border-box;
-  background-color: $light-blue-main;
+  background-color: variables.$light-blue-main;
   color: #ffffff;
   font-family: Montserrat, sans-serif;
   font-weight: 500;
@@ -37,7 +37,7 @@ html, body {
 .input {
   box-sizing: border-box;
   padding: 17px 20px;
-  border: 2px solid $light-blue-main;
+  border: 2px solid variables.$light-blue-main;
   border-radius: 3px;
   font-family: Montserrat, sans-serif;
   font-weight: 400;
@@ -45,7 +45,7 @@ html, body {
   &::placeholder {
     color: #A8ABA7;
   }
-  color: $light-blue-main;
+  color: variables.$light-blue-main;
 }
 
 .owl-carousel {
@@ -78,7 +78,7 @@ h1, h3 {
   font-size: 20px;
   line-height: 26px;
   margin-bottom: 20px;
-  color: $light-blue-main;
+  color: variables.$light-blue-main;
 }
 
 .article-block-layout {
@@ -118,11 +118,11 @@ h1, h3 {
   width: 422px!important;
   margin-bottom: 5px!important;
   border-radius: 5px;
-  border: 2px solid $light-blue-main;
+  border: 2px solid variables.$light-blue-main;
   padding: 17px 20px;
 }
 .mat-mdc-option:hover, .mat-mdc-select {
-  color:$light-blue-main!important;
+  color: variables.$light-blue-main!important;
 }
 
 .ng-star-inserted .error-feedback.ng-star-inserted, .error-feedback {

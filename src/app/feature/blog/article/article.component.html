@@ -70,18 +70,30 @@
                         <div class="leave-a-comment" *ngIf="isLogged">
                             <textarea id="comment" #commentText class="input" cols="30" rows="10"
                                       placeholder="Напишите Ваш комментарий к статье..."></textarea>
-                            <button class="button" (click)="addNewComment(commentText)">Опубликовать комментарий</button>
+                            <button class="button" (click)="addNewComment(commentText)">Опубликовать комментарий
+                            </button>
                         </div>
-                        <div class="users-comments-items" *ngIf="article.comments.length > 0 || threeComments.length > 0">
-                            <div class="first-three-comments" *ngIf="threeComments && threeComments.length > 0">
-                                <comment *ngFor="let articleComment of threeComments" [comment]="articleComment" [amountOfCommentsShown]="firstThreeCommentsShown"
-                                         [articleId]="article.id" (userReactionChanged)="userReactionChangeHandler($event)" [countLikes]="articleComment.likesCount" [countDislikes]="articleComment.dislikesCount"></comment>
+                        <div class="users-comments-items" *ngIf="article.comments.length > 0">
+                            <div class="first-three"
+                                 *ngIf="threeComments.length > 0">
+                                <comment *ngFor="let articleComment of threeComments" [comment]="articleComment"
+                                         [amountOfCommentsShown]="firstThreeCommentsShown"
+                                         [articleId]="article.id"
+                                         (userReactionChanged)="userReactionChangeHandler($event)"
+                                         [countLikes]="articleComment.likesCount"
+                                         [countDislikes]="articleComment.dislikesCount"></comment>
                             </div>
-                            <div class="more-comments-items" *ngIf="comments && comments.allCount > 3" id="moreCommentsBlock">
-                                <comment *ngFor="let moreComment of comments.comments" [comment]="moreComment" [amountOfCommentsShown]="firstThreeCommentsShown"
-                                         [articleId]="article.id" (userReactionChanged)="userReactionChangeHandler($event)" [countLikes]="moreComment.likesCount" [countDislikes]="moreComment.dislikesCount"></comment>
+                            <div class="more-comments-items" *ngIf="comments && comments.allCount > 3"
+                                 id="moreCommentsBlock">
+                                <comment *ngFor="let moreComment of comments.comments" [comment]="moreComment"
+                                         [amountOfCommentsShown]="firstThreeCommentsShown"
+                                         [articleId]="article.id"
+                                         (userReactionChanged)="userReactionChangeHandler($event)"
+                                         [countLikes]="moreComment.likesCount"
+                                         [countDislikes]="moreComment.dislikesCount"></comment>
                             </div>
-                            <div class="users-comments-pagination" #moreComments *ngIf="article.commentsCount && article.commentsCount > 3"
+                            <div class="users-comments-pagination" #moreComments
+                                 *ngIf="article.commentsCount && article.commentsCount > 3"
                                  (click)="showHiddenComments(moreComments)">
                                 <a>
                                     Загрузить ещё комментарии
@@ -100,7 +112,8 @@
 
                 <div class="article-block-layout">
                     <div class="article-block-layout-title">Читайте также:</div>
-                    <article-card *ngFor="let relatedArticle of relatedArticles" [article]="relatedArticle"></article-card>
+                    <article-card *ngFor="let relatedArticle of relatedArticles"
+                                  [article]="relatedArticle"></article-card>
                 </div>
             </div>
         </div>

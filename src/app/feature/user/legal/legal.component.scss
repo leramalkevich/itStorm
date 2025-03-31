@@ -1,10 +1,12 @@
-@import "../../../../assets/styles/mixins";
+@use "../../../../assets/styles/mixins";
+
 .legal-terms {
   padding: 20px 0 60px 0;
+
   .container {
     .legal-terms-text {
       .legal-terms-title {
-        @include head-lora-36;
+        @include mixins.head-lora-36;
         margin-bottom: 20px;
       }
     }

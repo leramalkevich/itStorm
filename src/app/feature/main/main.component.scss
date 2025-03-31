@@ -1,5 +1,5 @@
-@import "../../../assets/styles/variables";
-@import "../../../assets/styles/mixins";
+@use "../../../assets/styles/variables";
+@use "../../../assets/styles/mixins";
 
 .main {
   padding-bottom: 60px;
@@ -43,14 +43,13 @@
           padding-top: 100px;
           padding-bottom: 180px;
           padding-left: 80px;
-          //height: -webkit-fill-available;
 
           .carousel-slide-text-above-title {
             font-family: Montserrat, sans-serif;
             font-weight: 600;
             font-size: 12px;
             letter-spacing: 6px;
-            color: $light-blue-main;
+            color: variables.$light-blue-main;
           }
 
           .carousel-slide-title {
@@ -63,7 +62,7 @@
             margin-bottom: 20px;
 
             span {
-              color: $light-blue-main;
+              color: variables.$light-blue-main;
             }
           }
 
@@ -83,8 +82,6 @@
               width: 163px;
             }
           }
-
-
         }
       }
     }
@@ -96,7 +93,7 @@
 
   .container {
     .our-services-title {
-      @include head-lora-38;
+      @include mixins.head-lora-38;
       margin-bottom: 40px;
     }
   }
@@ -119,7 +116,7 @@
       max-width: 703px;
 
       .about-us-info-title {
-        @include head-lora-38;
+        @include mixins.head-lora-38;
         margin-bottom: 20px;
       }
 
@@ -140,7 +137,7 @@
           font-weight: 400;
           font-size: 26px;
           margin-bottom: 20px;
-          color: $light-blue-main;
+          color: variables.$light-blue-main;
         }
         .about-us-info-items {
           display: grid;
@@ -165,7 +162,7 @@
                 font-family: Lora, sans-serif;
                 font-weight: 500;
                 font-size: 50px;
-                color: $light-blue-main;
+                color: variables.$light-blue-main;
                 bottom: -5px;
                 left: 10px;
               }
@@ -194,7 +191,7 @@
   padding: 60px 0;
   .container {
     .popular-articles-title {
-      @include head-lora-38;
+      @include mixins.head-lora-38;
       margin-bottom: 40px;
     }
     .popular-articles-items {
@@ -213,7 +210,7 @@
         font-family: Montserrat, sans-serif;
         font-weight: 500;
         font-size: 20px;
-        color: $light-blue-main;
+        color: variables.$light-blue-main;
         display: flex;
         align-items: baseline;
         svg {
@@ -228,7 +225,7 @@
   padding: 60px 0;
   .container {
     .reviews-title {
-      @include head-lora-38;
+      @include mixins.head-lora-38;
       margin-bottom: 20px;
     }
     .reviews-carousel {
@@ -236,7 +233,7 @@
       .review-item {
         max-width: 396px;
         height: 267px;
-        border: 2px solid $light-blue-main;
+        border: 2px solid variables.$light-blue-main;
         border-radius: 5px;
         box-sizing: border-box;
         padding: 30px;
@@ -255,12 +252,12 @@
             font-family: Montserrat, sans-serif;
             font-weight: 600;
             font-size: 18px;
-            color: $light-blue-main;
+            color: variables.$light-blue-main;
           }
         }
         .review-item-text {
           line-height: 22.4px;
-          color: $dark-blue-main;
+          color: variables.$dark-blue-main;
         }
       }
       .reviews-arrows {
@@ -301,7 +298,7 @@
       max-width: 501px;
       margin-left: 26px;
       .location-address-title {
-        @include head-lora-38;
+        @include mixins.head-lora-38;
         margin-bottom: 20px;
       }
       .location-address-items {
@@ -311,7 +308,7 @@
             font-family: Montserrat, sans-serif;
             font-weight: 500;
             font-size: 20px;
-            color: $light-blue-main;
+            color: variables.$light-blue-main;
             margin-bottom: 10px;
           }
           .location-address-item-text {

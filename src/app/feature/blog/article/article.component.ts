@@ -1,6 +1,6 @@
 import {Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import {ArticleType} from "../../../../types/article.type";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -44,21 +44,7 @@ export class ArticleComponent implements OnInit {
         text: ''
     };
     threeComments: CommentType[] = [];
-    comments: CommentsResponseType = {
-        allCount: 0,
-        comments: [{
-            id: '',
-            text: '',
-            date: new Date(),
-            likesCount: 0,
-            dislikesCount: 0,
-            user: {
-                id: '',
-                name: ''
-            },
-            action: ''
-        }]
-    };
+    comments: CommentsResponseType | null = null;
     relatedArticles: RelatedArticlesType[] = [];
     serverStaticPath = environment.serverStaticPath;
     isLogged: boolean = false;
@@ -66,7 +52,7 @@ export class ArticleComponent implements OnInit {
     @ViewChild('moreComments') moreComments: ElementRef | undefined;
 
     constructor(private articleService: ArticleService, private activatedRoute: ActivatedRoute,
-                private commentsService: CommentsService, private authService: AuthService, private router: Router) {
+                private commentsService: CommentsService, private authService: AuthService) {
         this.isLogged = this.authService.getIsLoggedIn();
     }
 
@@ -135,12 +121,13 @@ export class ArticleComponent implements OnInit {
 
     userReactionChangeHandler(comment: CommentType) {
         let offset = 0;
-        if (this.firstThreeCommentsShown <= 3) {
-            offset = 0;
-        } else if (this.firstThreeCommentsShown > 3 && this.firstThreeCommentsShown <= 13) {
-            offset = 3;
-        } else if (this.firstThreeCommentsShown > 13) {
-            offset = this.firstThreeCommentsShown - 10;
+        if (this.threeComments.length > 0) {
+            const replaceComment: number = this.threeComments.findIndex(item => item.id === comment.id);
+            offset = replaceComment;
+        }
+        if (this.comments && this.comments.comments.length > 0) {
+            const replaceComment: number = this.comments.comments.findIndex(item => item.id === comment.id);
+            offset = replaceComment;
         }
 
         const params = {offset: offset, article: this.article.id};
@@ -179,7 +166,7 @@ export class ArticleComponent implements OnInit {
                                     this.threeComments[replaceComment] = comment;
                                 }
                             }
-                            if (this.comments.comments.length > 0) {
+                            if (this.comments && this.comments.comments.length > 0) {
                                 const replaceComment = this.comments.comments.findIndex(item => item.id === comment.id);
                                 if (replaceComment !== -1) {
                                     this.comments.comments[replaceComment] = comment;
@@ -202,25 +189,16 @@ export class ArticleComponent implements OnInit {
                             (text as HTMLInputElement).value = '';
                             this._snackBar.open(dataResponse.message);
 
-                            const params = {
-                                offset: 0,
-                                article: this.article.id
-                            }
+                            const params = { offset: 0, article: this.article.id };
                             if (params) {
                                 this.commentsService.getComments(params)
                                     .subscribe({
                                         next: (updateComments: CommentsResponseType) => {
-                                            if ((this.threeComments && this.article.commentsCount < 3) || this.threeComments.length === 0) {
-                                                this.threeComments = updateComments.comments;
-                                                this.article.commentsCount = updateComments.allCount;
-                                                this.firstThreeCommentsShown = this.threeComments.length;
-                                            } else if ((this.threeComments && this.article.commentsCount >= 3) || (this.threeComments.length === 0 && this.comments.allCount !== 0)) {
-                                                this.threeComments = updateComments.comments.slice(0, 3);
-                                                this.article.commentsCount = updateComments.allCount;
-                                                this.firstThreeCommentsShown = 3;
-                                                this.comments = {allCount: updateComments.allCount, comments: []};
-                                                this.moreComments?.nativeElement.classList.remove('hide');
-                                            }
+                                            this.threeComments = updateComments.comments.slice(0, 3);
+                                            this.article.commentsCount = updateComments.allCount;
+                                            this.comments = null;
+                                            this.moreComments?.nativeElement.classList.remove('hide');
+
                                             if (this.threeComments.length > 0) {
                                                 this.commentsService.getUserArticleCommentActions(this.article.id)
                                                     .subscribe({
@@ -256,62 +234,82 @@ export class ArticleComponent implements OnInit {
     }
 
     showHiddenComments(moreCommentsElement: HTMLElement): void {
-        let params = {
-            offset: this.firstThreeCommentsShown,
-            article: this.article.id
+        if (this.threeComments.length) {
+            this.comments = {
+                allCount: this.article.commentsCount,
+                comments: [...this.threeComments]
+            };
+            this.threeComments = [];
         }
-        if (params) {
+
+        if (this.comments) {
+            const params = {
+                offset: this.comments.comments.length,
+                article: this.article.id
+            };
             this.commentsService.getComments(params)
                 .subscribe({
-                    next: (data: CommentsResponseType) => {
-                        if (data) {
-                            let restCommentsCount = data.allCount - this.firstThreeCommentsShown;
-                            if (restCommentsCount > 10) {
-                                this.firstThreeCommentsShown += 10;
-                            } else {
-                                this.firstThreeCommentsShown = this.firstThreeCommentsShown + restCommentsCount;
-                            }
-                            if (data.allCount === this.firstThreeCommentsShown) {
+                    next: (newComments: CommentsResponseType) => {
+                        if (!newComments || !newComments.comments.length) {
+                            moreCommentsElement.classList.add('hide');
+                            return;
+                        }
+
+                        //combining new comments with the loaded ones
+                        if (this.comments) {
+                            this.comments = {
+                                allCount: newComments.allCount,
+                                comments: [...this.comments.comments, ...newComments.comments]
+                            };
+
+                            if (this.comments.comments.length >= this.comments.allCount) {
                                 moreCommentsElement.classList.add('hide');
                             }
-                            this.comments = data;
-                            this.threeComments = [];
-                            if (this.isLogged && data.comments.length > 0) {
-                                this.commentsService.getUserArticleCommentActions(this.article.id)
-                                    .subscribe({
-                                        next: (userActions: DefaultResponseType | { comment: string, action: string }[]) => {
-                                            if ((userActions as DefaultResponseType).error && (userActions as DefaultResponseType).message) {
-                                                this._snackBar.open((userActions as DefaultResponseType).message);
-                                            }
-                                            let userActionsForComments = userActions as { comment: string, action: string }[];
-                                            if (userActionsForComments && userActionsForComments.length > 0) {
-                                                this.comments.comments.forEach(item => {
-                                                    const commentWithActions = userActionsForComments.find(comment => comment.comment === item.id);
-                                                    if (commentWithActions) {
-                                                        item.action = commentWithActions.action;
-                                                    }
-                                                });
-                                            }
-                                        }, error: (errorResponse: HttpErrorResponse) => {
-                                            if (errorResponse.error && errorResponse.error.message) {
-                                                this._snackBar.open(errorResponse.error.message);
-                                            } else {
-                                                this._snackBar.open('Ошибка');
-                                            }
-                                        }
-                                    });
+                            if (this.isLogged) {
+                                this.loadUserCommentActions();
                             }
-                            this.router.navigate([], {fragment: "moreCommentsBlock"});
                         }
 
                     }, error: (errorResponse: HttpErrorResponse) => {
                         if (errorResponse.error && errorResponse.error.message) {
                             this._snackBar.open(errorResponse.error.message);
                         } else {
-                            this._snackBar.open('Что-то пошло не так...Обратитесь в тех поддержку');
+                            this._snackBar.open('Ошибка при загрузке комментариев');
                         }
                     }
                 });
         }
+    }
+
+    private loadUserCommentActions(): void {
+        this.commentsService.getUserArticleCommentActions(this.article.id)
+            .subscribe({
+                next: (userActions: DefaultResponseType | { comment: string, action: string }[]) => {
+                    if ((userActions as DefaultResponseType).error) {
+                        this._snackBar.open((userActions as DefaultResponseType).message || 'Что-то пошло не так...');
+                        return;
+                    }
+                    const actions = userActions as { comment: string, action: string }[];
+                    if (this.comments && this.comments?.comments.length) {
+                        this.comments.comments.forEach(comment => {
+                            const action = actions.find(item => item.comment === comment.id);
+                            comment.action = action?.action || '';
+                        });
+                    }
+                    if (this.threeComments.length) {
+                        this.threeComments.forEach(comment => {
+                            const action = actions.find(item => item.comment === comment.id);
+                            comment.action = action?.action || '';
+                        })
+                    }
+
+                }, error: (errorResponse: HttpErrorResponse) => {
+                    if (errorResponse.error && errorResponse.error.message) {
+                        this._snackBar.open(errorResponse.error.message);
+                    } else {
+                        this._snackBar.open('Ошибка загрузки действий');
+                    }
+                }
+            })
     }
 }

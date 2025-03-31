@@ -12,14 +12,14 @@ import {UserInfoResponseType} from "../../../../types/user-info-response.type";
 export class HeaderComponent implements OnInit {
     private _snackBar = inject(MatSnackBar);
     isLogged: boolean = false;
-    userInfo: UserInfoResponseType | null = null;
-    shownUserName:string|undefined;
+    userInfo: string | UserInfoResponseType | null = null;
+    shownUserName: string | undefined;
 
     constructor(private authService: AuthService) {
         this.isLogged = this.authService.getIsLoggedIn();
         if (this.isLogged) {
             this.userInfo = this.authService.getUserInfo();
-            this.shownUserName = this.userInfo?.name.trim().split(" ")[0];
+            this.shownUserName = (this.userInfo as UserInfoResponseType)?.name.trim().split(" ")[0];
         }
     }
 
@@ -27,10 +27,13 @@ export class HeaderComponent implements OnInit {
         this.authService.isLogged$.subscribe((isLoggedIn: boolean) => {
             this.isLogged = isLoggedIn;
             if (isLoggedIn) {
-                this.userInfo = this.authService.getUserInfo();
-                this.shownUserName = this.userInfo?.name.trim().split(" ")[0];
+                this.authService.userName$.subscribe(user => {
+                    this.userInfo = user;
+                    this.shownUserName = (this.userInfo as string)?.trim().split(" ")[0];
+                });
             }
         });
+
     }
 
     logout(): void {

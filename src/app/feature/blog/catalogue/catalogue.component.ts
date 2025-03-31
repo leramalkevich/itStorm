@@ -64,7 +64,10 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                             this.activeParams = ActiveParamsUtils.processParams(params);
                             if (this.activeParams.page) {
                                 this.activeParams.page = parseInt(String(this.activeParams.page));
+                            } else {
+                                this.activeParams.page = 1;
                             }
+
                             this.appliedFilters = [];
                             this.activeParams.categories?.forEach(url => {
                                 for (let i = 0; i < this.sortingOptions.length; i++) {
@@ -96,10 +99,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
                     }
                 }
             });
-
     }
 
-    ngOnDestroy():void {
+    ngOnDestroy(): void {
         this.sortingOptions.forEach(item => {
             if (item.active === true) {
                 item.active = false;
@@ -107,7 +109,7 @@ export class CatalogueComponent implements OnInit, OnDestroy {
         });
     }
 
-    toggleSortingBlock():void {
+    toggleSortingBlock(): void {
         this.sortingBlockOpen = !this.sortingBlockOpen;
     }
 
@@ -139,10 +141,13 @@ export class CatalogueComponent implements OnInit, OnDestroy {
     sort(value: string) {
         const hasBeenAdded: string | undefined = this.activeParams.categories?.find(item => item === value);
         if (hasBeenAdded) {
-            this.activeParams.categories = this.activeParams.categories?.filter(item=>item!==value);
-            const removeFromAdded = this.sortingOptions.find(item=>item.url === hasBeenAdded);
+            this.activeParams.categories = this.activeParams.categories?.filter(item => item !== value);
+            const removeFromAdded = this.sortingOptions.find(item => item.url === hasBeenAdded);
             if (removeFromAdded) {
                 removeFromAdded.active = false;
+                if (this.activeParams.page && this.activeParams.page > 1) {
+                    this.activeParams.page = 1;
+                }
                 this.router.navigate(['/catalogue-of-articles'], {
                     queryParams: this.activeParams
                 });
@@ -152,6 +157,9 @@ export class CatalogueComponent implements OnInit, OnDestroy {
         const addingToActive = this.sortingOptions.find(item => item.url === value);
         if (addingToActive) {
             addingToActive.active = true;
+        }
+        if (this.activeParams.page && this.activeParams.page > 1) {
+            this.activeParams.page = 1;
         }
         this.activeParams.categories?.push(value);
         this.router.navigate(['/catalogue-of-articles'], {
@@ -173,8 +181,8 @@ export class CatalogueComponent implements OnInit, OnDestroy {
 
     // отслеживание клика вне блока и скрытие его
     @HostListener('document:click', ['$event'])
-    click(event:Event) {
-        if (this.sortingBlockOpen && (event.target as HTMLElement).className.indexOf('blog-soring-block')===-1) {
+    click(event: Event) {
+        if (this.sortingBlockOpen && (event.target as HTMLElement).className.indexOf('blog-soring-block') === -1) {
             this.sortingBlockOpen = false;
         }
     }

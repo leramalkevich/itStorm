@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/variables";
+@use "../../../../assets/styles/variables";
 
 .footer {
   padding-top: 40px;
@@ -26,10 +26,11 @@
               margin-right: 20px;
 
               a {
-                color: $dark-blue-main;
+                color: variables.$dark-blue-main;
                 text-decoration: none;
+
                 &:hover {
-                  color: $light-blue-main;
+                  color: variables.$light-blue-main;
                 }
               }
             }
@@ -37,34 +38,42 @@
         }
       }
     }
+
     .footer-additional-info {
       margin-bottom: 6px;
       display: flex;
       align-items: baseline;
+
       .footer-additional-info-item {
         margin-right: 60px;
+
         &:last-child {
           margin-right: 0;
         }
+
         .footer-additional-info-title {
-          font-family: Montserrat,sans-serif;
+          font-family: Montserrat, sans-serif;
           font-weight: 500;
           font-size: 16px;
-          color:$light-blue-main;
+          color: variables.$light-blue-main;
           margin-bottom: 10px;
         }
+
         .footer-additional-info-text {
           text-decoration: none;
           cursor: pointer;
           line-height: 20.8px;
-          color:$dark-blue-main;
+          color: variables.$dark-blue-main;
           margin-bottom: 10px;
         }
+
         &.address {
           max-width: 253px;
         }
+
         &.phone {
           max-width: 153px;
+
           .button {
             margin-top: 10px;
             font-size: 12px;
@@ -72,20 +81,25 @@
             width: 153px;
           }
         }
+
         &.email {
           max-width: 127px;
         }
+
         &.social-medias {
           max-width: 203px;
+
           .footer-additional-info-links {
             margin-top: 5px;
             display: flex;
+
             a {
               text-decoration: none;
               cursor: pointer;
               margin-right: 12px;
               width: 24px;
               height: 24px;
+
               &:last-child {
                 margin-right: 0;
               }
@@ -94,8 +108,9 @@
         }
       }
     }
+
     .rights {
-      color: $light-blue-main;
+      color: variables.$light-blue-main;
     }
   }
 }

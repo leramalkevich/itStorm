@@ -11,7 +11,8 @@ const routes: Routes = [{
     children: [
         {path: '', component: MainComponent},
         {path: '', loadChildren: () => import('./feature/user/user.module').then(m => m.UserModule), canActivate:[authForwardGuard]},
-        {path: '', loadChildren: () => import('./feature/blog/blog.module').then(m => m.BlogModule), canActivate:[authGuard]}
+        {path: '', loadChildren: () => import('./feature/blog/blog.module').then(m => m.BlogModule)}
+        // {path: '', loadChildren: () => import('./feature/blog/blog.module').then(m => m.BlogModule), canActivate:[authGuard]}
     ]
 }];
 

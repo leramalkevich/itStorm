@@ -1,16 +1,19 @@
-@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
-@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
-@import "fonts";
-@import "variables";
-@import "mixins";
-@import "global";
+//@use 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+//@use 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+@use "fonts";
+@use "variables";
+@use "mixins";
+@use "global";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-app-root {
+app-layout {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+app-layout router-outlet {
+  flex: 1 0 auto;
 }
 app-footer {
   flex:0 0 auto;

@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/variables";
+@use "../../../../assets/styles/variables";
 
 .our-services-items {
   display: flex;
@@ -24,16 +24,17 @@
         font-family: Montserrat, sans-serif;
         font-weight: 500;
         font-size: 20px;
-        color: $light-blue-main;
+        color: variables.$light-blue-main;
         margin-bottom: 10px;
       }
 
       .our-services-item-info-text {
         font-size: 14px;
         line-height: 18.2px;
-        color: $dark-blue-main;
+        color: variables.$dark-blue-main;
       }
     }
+
     .our-services-item-action {
       display: flex;
       justify-content: space-between;
@@ -43,7 +44,7 @@
         font-family: Montserrat, sans-serif;
         font-weight: 600;
         font-size: 20px;
-        color: $light-blue-main;
+        color: variables.$light-blue-main;
       }
 
       .button {

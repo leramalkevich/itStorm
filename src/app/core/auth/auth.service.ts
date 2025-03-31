@@ -15,6 +15,7 @@ export class AuthService {
     public userInfoKey: string = 'userInfo';
     public isLogged$: Subject<boolean> = new Subject<boolean>();
     public isLogged: boolean = false;
+    userName$: Subject<string> = new Subject<string>();
 
     constructor(private http: HttpClient) {
         this.isLogged = !!localStorage.getItem(this.accessTokenKey);
@@ -73,7 +74,7 @@ export class AuthService {
         }
     }
 
-    public getUserInfo(): null | UserInfoResponseType {
+    public getUserInfo(): null | UserInfoResponseType | string {
         const userInfo: string | null = localStorage.getItem(this.userInfoKey);
         if (userInfo) {
             return JSON.parse(userInfo);
@@ -82,11 +83,8 @@ export class AuthService {
     }
 
     public setUserInfo(info: UserInfoResponseType) {
-        if (info) {
-            localStorage.setItem(this.userInfoKey, JSON.stringify(info));
-        } else {
-            localStorage.removeItem(this.userInfoKey);
-        }
+        localStorage.setItem(this.userInfoKey, JSON.stringify(info));
+        this.userName$.next(info.name);
     }
 
     public removeUserInfo(): void {

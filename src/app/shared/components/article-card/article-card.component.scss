@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/variables";
+@use "../../../../assets/styles/variables";
 
 .article-card {
   width: 292px;
@@ -11,7 +11,7 @@
     top: 10px;
     right: 9px;
     background-color: #FFFFFF;
-    color: $light-blue-main;
+    color: variables.$light-blue-main;
     font-size: 11px;
     text-align: center;
     border-radius: 5px;
@@ -28,26 +28,28 @@
 
   .article-card-info {
     height: 230px;
+
     .article-card-title {
       font-family: Montserrat, sans-serif;
       font-weight: 500;
       font-size: 20px;
       line-height: 26px;
       margin-bottom: 20px;
-      color: $light-blue-main;
+      color: variables.$light-blue-main;
     }
 
     .article-card-text {
       font-size: 14px;
       line-height: 18.2px;
-      color: $dark-blue-main;
+      color: variables.$dark-blue-main;
     }
   }
 
   .article-card-read-more {
     margin-top: 15px;
+
     a {
-      color: $light-blue-main;
+      color: variables.$light-blue-main;
       text-decoration: underline;
     }
   }

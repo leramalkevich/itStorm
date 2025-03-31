@@ -24,9 +24,9 @@ export class SignupComponent {
         password: ['', [Validators.required, Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)]],
         agree: [false, [Validators.requiredTrue]]
     });
-    @ViewChild('password')password!:ElementRef;
+    @ViewChild('password') password!: ElementRef;
 
-    constructor(private authService: AuthService, private userService:UserService, private router: Router) {
+    constructor(private authService: AuthService, private userService: UserService, private router: Router) {
     }
 
     signup() {
@@ -76,7 +76,7 @@ export class SignupComponent {
     }
 
     togglePassword() {
-        if (this.password.nativeElement.getAttribute('type')=='password') {
+        if (this.password.nativeElement.getAttribute('type') == 'password') {
             this.password.nativeElement.setAttribute('type', 'text');
         } else {
             this.password.nativeElement.setAttribute('type', 'password');

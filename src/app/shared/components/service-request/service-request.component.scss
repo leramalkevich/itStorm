@@ -1,5 +1,5 @@
-@import "../../../../assets/styles/variables";
-@import "../../../../assets/styles/mixins";
+@use "../../../../assets/styles/variables";
+@use "../../../../assets/styles/mixins";
 
 .popup {
   position: fixed;
@@ -14,7 +14,7 @@
   justify-content: center;
 
   .container {
-    border: 2px solid $light-blue-main;
+    border: 2px solid variables.$light-blue-main;
     border-radius: 10px;
     box-sizing: border-box;
     height: 489px;
@@ -44,7 +44,7 @@
       }
 
       .popup-title {
-        @include head-lora-38;
+        @include mixins.head-lora-38;
         margin-bottom: 20px;
         max-width: 406px;
       }
