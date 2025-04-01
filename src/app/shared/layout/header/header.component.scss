@@ -57,12 +57,14 @@
         width: 204px;
 
         a {
-          cursor: pointer;
           display: flex;
           justify-content: flex-end;
           margin-right: 7px;
           text-decoration: none;
           color: variables.$dark-blue-main;
+          svg {
+            cursor: pointer;
+          }
 
           span {
             margin-top: 3px;

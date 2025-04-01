@@ -5,6 +5,7 @@ import { BlogRoutingModule } from './blog-routing.module';
 import {CatalogueComponent} from "./catalogue/catalogue.component";
 import {ArticleComponent} from "./article/article.component";
 import {SharedModule} from "../../shared/shared.module";
+import {ShareButtonDirective} from "ngx-sharebuttons";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {SharedModule} from "../../shared/shared.module";
     imports: [
         CommonModule,
         SharedModule,
-        BlogRoutingModule
+        BlogRoutingModule,
+        ShareButtonDirective
     ]
 })
 export class BlogModule { }

@@ -93,12 +93,20 @@
             }
 
             .share-the-article-links {
-              a {
+              button {
+                border: none;
                 margin-left: 13px;
                 text-decoration: none;
                 cursor: pointer;
                 width: 20px;
                 height: 20px;
+                box-sizing: border-box;
+                padding: 0;
+                background-color: transparent;
+                svg {
+                  width: 20px;
+                  height: 20px;
+                }
               }
             }
           }
